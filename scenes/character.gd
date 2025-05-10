@@ -2,25 +2,17 @@ extends CharacterBody2D
 
 const SPEED:float = 100
 
-enum State {  
-	IDLE,      
-	WALKING,  
-}  
-
 @onready var animated_sprite:AnimatedSprite2D = $animated_spite
-const L:int=0
-const R:int=1
-const F:int=2
-const B:int=3
-
-
-var state: State = State.IDLE
-
-const L_VEC = Vector2(-1, 0)
-const R_VEC = Vector2(1, 0)
-const F_VEC = Vector2(0, 1)
-const B_VEC = Vector2(0, -1)
-
+const IDLE = 0
+const WALK = 1
+const L=0
+const R=1
+const F=2
+const B=3
+const DIR_CHAR = ["L", "R", "F", "B"]
+const STATE_ANIM_NAME = ["idle", "walk"]
+var state_int = IDLE
+var dir_int = F
 
 func _process(delta : float) -> void:
 	pass
@@ -30,13 +22,20 @@ func _physics_process(delta: float) -> void:
 	var l:bool = Input.is_action_pressed("left")
 	var r:bool = Input.is_action_pressed("right")
 	var b:bool = Input.is_action_pressed("up")
-	var dir_vec = float(f) * F_VEC + float(l) * L_VEC + float(r) * R_VEC + float(b) * B_VEC
+	var dir_vec = Vector2(float(r)-float(l), float(f)-float(b)) 
 	velocity = dir_vec.normalized() * SPEED
-	if dir_vec==Vector2(0,0):
-		
+	state_int = WALK
+	if dir_vec.y>0:
+		dir_int = F
+	elif dir_vec.y<0:
+		dir_int = B
+	elif dir_vec.x<0:
+		dir_int = L
+	elif dir_vec.x>0:
+		dir_int = R
 	else:
-		
-	animated_sprite.play()
+		state_int = IDLE
+	animated_sprite.play(STATE_ANIM_NAME[state_int]+DIR_CHAR[dir_int])
 	move_and_slide()
 	
 	

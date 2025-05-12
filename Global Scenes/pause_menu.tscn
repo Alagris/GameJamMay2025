@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://dujhpsxeae0d1"]
+[gd_scene load_steps=6 format=3 uid="uid://dujhpsxeae0d1"]
 
 [ext_resource type="Script" path="res://Global Scenes/pause_menu.gd" id="1_yfb6i"]
+[ext_resource type="PackedScene" uid="uid://td42gcl31vog" path="res://scenes/UI/ui_button.tscn" id="2_7aqyc"]
+[ext_resource type="PackedScene" uid="uid://cgmn2l0nci2dk" path="res://scenes/UI/credits_menu.tscn" id="3_3c5p2"]
+[ext_resource type="PackedScene" uid="uid://dbkgdvdbcrj56" path="res://scenes/UI/settings_menu.tscn" id="4_4sr76"]
+[ext_resource type="Texture2D" uid="uid://cagwythhkux2g" path="res://assets/Lucid V1.2 Icon Pack/Gear.png" id="4_5phja"]
 
-[node name="Pause Menu" type="Control"]
+[node name="Pause Menu" type="Control" node_paths=PackedStringArray("settings_menu", "credits_menu", "back_button", "menu_root", "pause_button", "mouse_motion_timer", "button_box")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -11,8 +15,79 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yfb6i")
+settings_menu = NodePath("CanvasLayer/menu_root/Settings Menu")
+credits_menu = NodePath("CanvasLayer/menu_root/Credits Menu")
+back_button = NodePath("CanvasLayer/menu_root/Back Button")
+menu_root = NodePath("CanvasLayer/menu_root")
+pause_button = NodePath("spaghetti 1/pause button")
+mouse_motion_timer = NodePath("Mouse Motion Timer")
+button_box = NodePath("CanvasLayer/menu_root/button box")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="menu_root" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Settings Menu" parent="CanvasLayer/menu_root" instance=ExtResource("4_4sr76")]
+visible = false
+layout_mode = 1
+
+[node name="Credits Menu" parent="CanvasLayer/menu_root" instance=ExtResource("3_3c5p2")]
+visible = false
+layout_mode = 1
+
+[node name="Back Button" parent="CanvasLayer/menu_root" instance=ExtResource("2_7aqyc")]
+visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 100.0
+text = "Back"
+
+[node name="button box" type="VBoxContainer" parent="CanvasLayer/menu_root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.5
+offset_top = -98.5
+offset_right = 81.5
+offset_bottom = 98.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resume" parent="CanvasLayer/menu_root/button box" instance=ExtResource("2_7aqyc")]
+layout_mode = 2
+text = "Resume"
+
+[node name="Settings" parent="CanvasLayer/menu_root/button box" instance=ExtResource("2_7aqyc")]
+layout_mode = 2
+text = "Settings"
+
+[node name="Credits" parent="CanvasLayer/menu_root/button box" instance=ExtResource("2_7aqyc")]
+layout_mode = 2
+text = "Credits"
+
+[node name="spaghetti 1" type="CanvasLayer" parent="."]
+
+[node name="pause button" parent="spaghetti 1" instance=ExtResource("2_7aqyc")]
+offset_right = 22.0
+offset_bottom = 22.0
+scale = Vector2(4, 4)
+text = ""
+icon = ExtResource("4_5phja")
+
+[node name="Mouse Motion Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="CanvasLayer/menu_root/Back Button" to="." method="escape_requested"]
+[connection signal="pressed" from="CanvasLayer/menu_root/button box/Resume" to="." method="pause"]
+[connection signal="pressed" from="CanvasLayer/menu_root/button box/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu_root/button box/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="spaghetti 1/pause button" to="." method="pause"]
+[connection signal="timeout" from="Mouse Motion Timer" to="." method="_on_mouse_motion_timer_timeout"]

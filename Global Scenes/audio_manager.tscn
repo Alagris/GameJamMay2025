@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://u2088k2q6scu"]
+
+[ext_resource type="Script" path="res://Global Scenes/audio_manager.gd" id="1_n5xl5"]
+
+[node name="Audio Manager" type="Node" node_paths=PackedStringArray("UI_Hover_audio", "UI_Pressed_audio")]
+process_mode = 3
+script = ExtResource("1_n5xl5")
+UI_Hover_audio = NodePath("UI Hover")
+UI_Pressed_audio = NodePath("UI Pressed")
+
+[node name="UI Hover" type="AudioStreamPlayer2D" parent="."]
+
+[node name="UI Pressed" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Music Stream Organizer" type="Node" parent="."]
+
+[node name="Music 1" type="AudioStreamPlayer2D" parent="Music Stream Organizer"]

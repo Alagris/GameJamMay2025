@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://td42gcl31vog"]
+
+[ext_resource type="Script" path="res://scenes/UI/ui_button.gd" id="1_fpq6h"]
+
+[node name="UI Button" type="Button"]
+texture_filter = 1
+offset_right = 172.0
+offset_bottom = 63.0
+theme_override_font_sizes/font_size = 40
+text = "BUTTON"
+script = ExtResource("1_fpq6h")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

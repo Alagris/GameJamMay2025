@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt0p865mqlyau"]
+
+[ext_resource type="Script" path="res://Global Scenes/dialogue_manager.gd" id="1_hjbni"]
+
+[node name="Dialogue Manager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hjbni")

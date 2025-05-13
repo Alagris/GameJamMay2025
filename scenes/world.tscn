@@ -1,13 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=5 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="4_k0juu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
+radius = 35.0143
 
 [node name="World" type="Node2D"]
 
 [node name="Map" parent="." instance=ExtResource("1_rwgxs")]
 
-[node name="player" parent="." instance=ExtResource("2_4wyf3")]
-position = Vector2(191, 162)
+[node name="player" parent="." groups=["player"] instance=ExtResource("2_4wyf3")]
+position = Vector2(371, 117)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+
+[node name="letter" parent="." instance=ExtResource("4_k0juu")]
+position = Vector2(298, 103)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="letter"]
+shape = SubResource("CircleShape2D_71j4m")

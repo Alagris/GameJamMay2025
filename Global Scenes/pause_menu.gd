@@ -17,6 +17,7 @@ func _ready():
 	credits_menu.hide()
 	settings_menu.hide()
 	pause_button.show()
+	back_button.hide()
 
 
 

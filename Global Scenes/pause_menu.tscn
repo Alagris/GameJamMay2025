@@ -1,10 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://dujhpsxeae0d1"]
+[gd_scene load_steps=10 format=3 uid="uid://dujhpsxeae0d1"]
 
 [ext_resource type="Script" path="res://Global Scenes/pause_menu.gd" id="1_yfb6i"]
 [ext_resource type="PackedScene" uid="uid://td42gcl31vog" path="res://scenes/UI/ui_button.tscn" id="2_7aqyc"]
 [ext_resource type="PackedScene" uid="uid://cgmn2l0nci2dk" path="res://scenes/UI/credits_menu.tscn" id="3_3c5p2"]
 [ext_resource type="PackedScene" uid="uid://dbkgdvdbcrj56" path="res://scenes/UI/settings_menu.tscn" id="4_4sr76"]
 [ext_resource type="Texture2D" uid="uid://cagwythhkux2g" path="res://assets/Lucid V1.2 Icon Pack/Gear.png" id="4_5phja"]
+[ext_resource type="StyleBox" uid="uid://6sxf1yvy5afb" path="res://Styles/button hover.tres" id="5_22vuh"]
+[ext_resource type="StyleBox" uid="uid://jjhxf6qltuqe" path="res://Styles/pause button pressed.tres" id="5_b7kma"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rryxw"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q17j4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
 
 [node name="Pause Menu" type="Control" node_paths=PackedStringArray("settings_menu", "credits_menu", "back_button", "menu_root", "pause_button", "mouse_motion_timer", "button_box")]
 process_mode = 3
@@ -17,7 +34,7 @@ grow_vertical = 2
 script = ExtResource("1_yfb6i")
 settings_menu = NodePath("CanvasLayer/menu_root/Settings Menu")
 credits_menu = NodePath("CanvasLayer/menu_root/Credits Menu")
-back_button = NodePath("CanvasLayer/menu_root/Back Button")
+back_button = NodePath("CanvasLayer/menu_root/MarginContainer/Back Button")
 menu_root = NodePath("CanvasLayer/menu_root")
 pause_button = NodePath("spaghetti 1/pause button")
 mouse_motion_timer = NodePath("Mouse Motion Timer")
@@ -40,12 +57,6 @@ layout_mode = 1
 [node name="Credits Menu" parent="CanvasLayer/menu_root" instance=ExtResource("3_3c5p2")]
 visible = false
 layout_mode = 1
-
-[node name="Back Button" parent="CanvasLayer/menu_root" instance=ExtResource("2_7aqyc")]
-visible = false
-layout_mode = 0
-offset_right = 100.0
-text = "Back"
 
 [node name="button box" type="VBoxContainer" parent="CanvasLayer/menu_root"]
 layout_mode = 1
@@ -73,21 +84,47 @@ text = "Settings"
 layout_mode = 2
 text = "Credits"
 
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/menu_root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Back Button" parent="CanvasLayer/menu_root/MarginContainer" instance=ExtResource("2_7aqyc")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_rryxw")
+text = "Back"
+
 [node name="spaghetti 1" type="CanvasLayer" parent="."]
 
 [node name="pause button" parent="spaghetti 1" instance=ExtResource("2_7aqyc")]
-offset_right = 22.0
-offset_bottom = 22.0
+offset_right = 14.0
+offset_bottom = 14.0
 scale = Vector2(4, 4)
+theme_override_styles/focus = ExtResource("5_b7kma")
+theme_override_styles/hover_pressed = ExtResource("5_b7kma")
+theme_override_styles/hover = ExtResource("5_22vuh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_q17j4")
 text = ""
 icon = ExtResource("4_5phja")
 
 [node name="Mouse Motion Timer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="pressed" from="CanvasLayer/menu_root/Back Button" to="." method="escape_requested"]
 [connection signal="pressed" from="CanvasLayer/menu_root/button box/Resume" to="." method="pause"]
 [connection signal="pressed" from="CanvasLayer/menu_root/button box/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="CanvasLayer/menu_root/button box/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu_root/MarginContainer/Back Button" to="." method="escape_requested"]
 [connection signal="pressed" from="spaghetti 1/pause button" to="." method="pause"]
 [connection signal="timeout" from="Mouse Motion Timer" to="." method="_on_mouse_motion_timer_timeout"]

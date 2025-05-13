@@ -1,7 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbkgdvdbcrj56"]
+[gd_scene load_steps=6 format=3 uid="uid://dbkgdvdbcrj56"]
+
+[ext_resource type="Script" path="res://scenes/UI/settings_menu.gd" id="1_4kggg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rd0j"]
 bg_color = Color(0.0885599, 0.0885599, 0.0885599, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j03y7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.666667, 0.858824, 0.952941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aygtf"]
+bg_color = Color(0, 0.327697, 0.541505, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.666426, 0.86003, 0.953128, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iu5n0"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Settings Menu" type="Control"]
 layout_mode = 3
@@ -12,6 +33,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_4kggg")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -20,6 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rd0j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -29,15 +53,192 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_j03y7")
 text = "Settings"
 horizontal_alignment = 1
 
 [node name="Body" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="left side" type="VBoxContainer" parent="VBoxContainer/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Master UI" type="MarginContainer" parent="VBoxContainer/Body/left side"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Body/left side/Master UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aygtf")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Body/left side/Master UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Body/left side/Master UI/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Body/left side/Master UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="Master slider" type="HSlider" parent="VBoxContainer/Body/left side/Master UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_iu5n0")
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFX UI" type="MarginContainer" parent="VBoxContainer/Body/left side"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Body/left side/SFX UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aygtf")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Body/left side/SFX UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Body/left side/SFX UI/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Body/left side/SFX UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "SFX Volume"
+horizontal_alignment = 1
+
+[node name="sfx slider" type="HSlider" parent="VBoxContainer/Body/left side/SFX UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_iu5n0")
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Music UI" type="MarginContainer" parent="VBoxContainer/Body/left side"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Body/left side/Music UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aygtf")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Body/left side/Music UI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Body/left side/Music UI/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Body/left side/Music UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="Music slider" type="HSlider" parent="VBoxContainer/Body/left side/Music UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_iu5n0")
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Dialogue Speed" type="MarginContainer" parent="VBoxContainer/Body/left side"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Body/left side/Dialogue Speed"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aygtf")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Body/left side/Dialogue Speed"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Body/left side/Dialogue Speed/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Body/left side/Dialogue Speed/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Dialogue Speed"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Body/left side/Dialogue Speed/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Dialogue Speed" type="OptionButton" parent="VBoxContainer/Body/left side/Dialogue Speed/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+selected = 1
+item_count = 3
+popup/item_0/text = "Slow"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Fast"
+popup/item_2/id = 2
+
+[connection signal="value_changed" from="VBoxContainer/Body/left side/Master UI/MarginContainer/HBoxContainer/Master slider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Body/left side/SFX UI/MarginContainer/HBoxContainer/sfx slider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Body/left side/Music UI/MarginContainer/HBoxContainer/Music slider" to="." method="_on_music_slider_value_changed"]
+[connection signal="item_selected" from="VBoxContainer/Body/left side/Dialogue Speed/MarginContainer/HBoxContainer/MarginContainer/Dialogue Speed" to="." method="_on_dialogue_speed_item_selected"]

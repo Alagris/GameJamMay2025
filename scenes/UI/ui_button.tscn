@@ -1,12 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://td42gcl31vog"]
+[gd_scene load_steps=5 format=3 uid="uid://td42gcl31vog"]
 
 [ext_resource type="Script" path="res://scenes/UI/ui_button.gd" id="1_fpq6h"]
+[ext_resource type="StyleBox" uid="uid://bcq04iktqecg5" path="res://Styles/button hover thicker.tres" id="1_ynrjq"]
+[ext_resource type="StyleBox" uid="uid://jjhxf6qltuqe" path="res://Styles/pause button pressed.tres" id="2_24vq5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es48m"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
 
 [node name="UI Button" type="Button"]
 texture_filter = 1
 offset_right = 172.0
 offset_bottom = 63.0
 theme_override_font_sizes/font_size = 40
+theme_override_styles/hover = ExtResource("1_ynrjq")
+theme_override_styles/pressed = ExtResource("2_24vq5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_es48m")
 text = "BUTTON"
 script = ExtResource("1_fpq6h")
 

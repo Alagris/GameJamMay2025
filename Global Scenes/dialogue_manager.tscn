@@ -1,10 +1,74 @@
-[gd_scene load_steps=2 format=3 uid="uid://dt0p865mqlyau"]
+[gd_scene load_steps=3 format=3 uid="uid://dt0p865mqlyau"]
 
 [ext_resource type="Script" path="res://Global Scenes/dialogue_manager.gd" id="1_hjbni"]
+[ext_resource type="Script" path="res://Global Scenes/intro_list.gd" id="2_kjmyx"]
 
-[node name="Dialogue Manager" type="Control"]
+[node name="Dialogue Manager" type="Control" node_paths=PackedStringArray("transform_control", "text_display", "dialogue_box", "text_noise", "NPC_nameplate", "npc_sprite", "player_nameplate", "player_sprite", "intro_list")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_hjbni")
+transform_control = NodePath("CanvasLayer/transform control")
+text_display = NodePath("CanvasLayer/transform control/Dialogue Box/RichTextLabel")
+dialogue_box = NodePath("CanvasLayer/transform control/Dialogue Box")
+text_noise = NodePath("text noises/text noise 1")
+NPC_nameplate = NodePath("CanvasLayer/transform control/NPC Nameplate")
+npc_sprite = NodePath("CanvasLayer/NPC Sprite")
+player_nameplate = NodePath("CanvasLayer/transform control/Player Nameplate")
+player_sprite = NodePath("CanvasLayer/Player Sprite")
+intro_list = NodePath("Dialogue Lists/Intro List")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="transform control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player Nameplate" type="Label" parent="CanvasLayer/transform control"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 269.0
+offset_right = 40.0
+offset_bottom = 292.0
+text = "Player"
+
+[node name="NPC Nameplate" type="Label" parent="CanvasLayer/transform control"]
+layout_mode = 0
+offset_left = 1085.0
+offset_top = 284.0
+offset_right = 1134.0
+offset_bottom = 307.0
+text = "NPC"
+
+[node name="Dialogue Box" type="PanelContainer" parent="CanvasLayer/transform control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 157.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/transform control/Dialogue Box"]
+layout_mode = 2
+
+[node name="Player Sprite" type="Sprite2D" parent="CanvasLayer"]
+
+[node name="NPC Sprite" type="Sprite2D" parent="CanvasLayer"]
+
+[node name="Dialogue Lists" type="Node" parent="."]
+
+[node name="Intro List" type="Node" parent="Dialogue Lists"]
+script = ExtResource("2_kjmyx")
+
+[node name="text noises" type="Node" parent="."]
+
+[node name="text noise 1" type="AudioStreamPlayer2D" parent="text noises"]

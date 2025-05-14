@@ -1,16 +1,12 @@
-extends Node
+extends Node2D
 
 @onready var player = DialogueManager.CHARACTER_TALKING.PLAYER
 @onready var npc = DialogueManager.CHARACTER_TALKING.NPC
 
-func _ready():
-	dialogue_array.append(intro_1)
-	print(dialogue_array)
-	print(intro_1)
+func interact():
+	DialogueManager.play_dialogue(item_dialogue)
 
-var dialogue_array:Array = []
-
-@onready var intro_1:Array = [
+@onready var item_dialogue:Array = [
 [player,npc],#this dictates what sprite comes on screen
 
 [[player],#give focus to this character

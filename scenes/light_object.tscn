@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq7rjoj2acmjh"]
+
+[ext_resource type="Script" path="res://scripts/light_object.gd" id="1_lc526"]
+[ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="2_3kji8"]
+
+[sub_resource type="Gradient" id="Gradient_lsx4t"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nse26"]
+gradient = SubResource("Gradient_lsx4t")
+width = 100
+height = 100
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_erat4"]
+radius = 17.0
+
+[node name="Light Object" type="Node2D"]
+script = ExtResource("1_lc526")
+
+[node name="Light Object" type="PointLight2D" parent="."]
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_nse26")
+
+[node name="Area2D" parent="." instance=ExtResource("2_3kji8")]
+action_name = "Turn On"
+reusable_interaction = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_erat4")

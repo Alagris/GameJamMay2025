@@ -2,15 +2,19 @@ extends Area2D
 class_name Item
 
 @export var action_name:String = "Pick up"
+@export var requires_power:bool = false
+@export var reusable_interaction:bool = false
 
 var interact:Callable = func():
-	pass
+	get_parent().interact()
 	
 
 func _on_body_entered(body: Node2D) -> void:
+	print("register area")
 	InteractionManager.register_area(self)
-	pass
+	
 
 func _on_body_exited(body: Node2D) -> void:
+	print("unregister area")
 	InteractionManager.unregister_area(self)
-	pass
+	

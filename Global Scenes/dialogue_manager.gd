@@ -34,10 +34,6 @@ func _ready():
 	player_sprite.hide()
 	player_nameplate.hide()
 	NPC_nameplate.hide()
-	await get_tree().create_timer(2,true).timeout
-	
-	play_dialogue(DIALOGUE_LIST.INTRO,0)
-
 
 func change_npc_name(input_name:String):
 	NPC_nameplate.text = input_name
@@ -64,11 +60,14 @@ func next_stack():
 	display_text()
 
 func display_text():
+	print(text_stack[current_stack][0])
 	match text_stack[current_stack][0]:
-		CHARACTER_TALKING.NPC:
+		[1]:
 			focus_character(CHARACTER_TALKING.NPC)
-		CHARACTER_TALKING.PLAYER:
+		[0]:
 			focus_character(CHARACTER_TALKING.PLAYER)
+		_:
+			print("error in display text dialogue manager")
 	end_of_text = false
 	print(text_stack[current_stack][1][0])
 	text_display.text = text_stack[current_stack][1][0]
@@ -82,14 +81,10 @@ func display_text():
 		await get_tree().create_timer(dialogue_speed,true).timeout
 	end_of_text = true
 
-func play_dialogue(dialogue_list:DIALOGUE_LIST,index:int):
+func play_dialogue(dialogue_package:Array):
 	print("play dialogue requested")
-	var selected_dialogue_list:Node
-	match dialogue_list:
-		DIALOGUE_LIST.INTRO:
-			selected_dialogue_list = intro_list
 	
-	text_stack = selected_dialogue_list.dialogue_array[index].duplicate(true)
+	text_stack = dialogue_package.duplicate(true)
 	print(text_stack)
 	text_stack_size = (text_stack.size() - 1)
 	current_stack = 0
@@ -102,8 +97,9 @@ func play_dialogue(dialogue_list:DIALOGUE_LIST,index:int):
 			CHARACTER_TALKING.PLAYER:
 				enter_sprite("left",player_sprite)
 			CHARACTER_TALKING.NPC:
-				enter_sprite("left",npc_sprite)
-			
+				enter_sprite("right",npc_sprite)
+			_:
+				print("error in dialogue display")
 	text_stack.pop_front()
 	display_text()
 	print("opening dialogue complete")
@@ -126,12 +122,13 @@ func box_open():
 	print("box open requested")
 	transform_control.show()
 	var tween = create_tween()
+	transform_control.position = Vector2(0,500)
 	tween.tween_property(transform_control,"position",Vector2(0,0),0.5)
 
 func box_close():
 	print("box close request")
 	var tween = create_tween()
-	tween.tween_property(transform_control,"position",Vector2(0,300),0.5)
+	tween.tween_property(transform_control,"position",Vector2(0,500),0.5)
 	close_nameplate(NPC_nameplate)
 	close_nameplate(player_nameplate)
 	await get_tree().create_timer(.5,true).timeout
@@ -156,14 +153,14 @@ func focus_character(selected_character:CHARACTER_TALKING):
 			close_nameplate(NPC_nameplate)
 
 func close_nameplate(nameplate_refrence:Control):
-	var relative_position:Vector2 = Vector2(nameplate_refrence.position.x,500)
+	var relative_position:Vector2 = Vector2(nameplate_refrence.position.x,510)
 	var tween = create_tween()
 	tween.tween_property(nameplate_refrence,"position",relative_position,0.5)
 	await get_tree().create_timer(.5,true).timeout
 	nameplate_refrence.hide()
 
 func open_nameplate(nameplate_refrence:Control):
-	var relative_position:Vector2 = Vector2(nameplate_refrence.position.x,456)
+	var relative_position:Vector2 = Vector2(nameplate_refrence.position.x,447)
 	nameplate_refrence.show()
 	var tween = create_tween()
 	tween.tween_property(nameplate_refrence,"position",relative_position,0.5)
@@ -172,15 +169,15 @@ func enter_sprite(left_or_right:String,selected_sprite:Sprite2D):
 	if not is_instance_valid(selected_sprite):
 		print("sprite invalid")
 		return
+	selected_sprite.show()
 	print("enter sprite requested")
 	var tween = create_tween()
 	var end_position:Vector2
 	match left_or_right:
 		"left":
-			end_position = Vector2(180,270)
+			end_position = Vector2(64,400)
 		"right":
-			end_position
-	selected_sprite.show()
+			end_position = Vector2(1000,400)
 	tween.tween_property(selected_sprite,"position",end_position,0.5)
 	print("enter sprite complete")
 
@@ -193,9 +190,9 @@ func exit_sprite(left_or_right:String,selected_sprite:Sprite2D):
 	var end_position:Vector2
 	match left_or_right:
 		"left":
-			end_position = Vector2(-180,270)
+			end_position = Vector2(-180,400)
 		"right":
-			end_position
+			end_position = Vector2(1500,400)
 	tween.tween_property(selected_sprite,"position",end_position,0.5)
 	await get_tree().create_timer(.5,true).timeout
 	selected_sprite.hide()

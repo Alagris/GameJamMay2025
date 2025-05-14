@@ -22,6 +22,10 @@ PauseMenu="*res://Global Scenes/pause_menu.tscn"
 DialogueManager="*res://Global Scenes/dialogue_manager.tscn"
 InteractionManager="*res://scenes/interaction_manager.tscn"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [input]
 
 up={

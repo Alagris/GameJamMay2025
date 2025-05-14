@@ -1,7 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt0p865mqlyau"]
+[gd_scene load_steps=6 format=3 uid="uid://dt0p865mqlyau"]
 
 [ext_resource type="Script" path="res://Global Scenes/dialogue_manager.gd" id="1_hjbni"]
 [ext_resource type="Script" path="res://Global Scenes/intro_list.gd" id="2_kjmyx"]
+[ext_resource type="StyleBox" uid="uid://df13x6cf0y0eg" path="res://Styles/dialogue_manager.tres" id="2_w0wv0"]
+[ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="3_3xf5m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1af3"]
+bg_color = Color(0.0580349, 0.11578, 6.01634e-09, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="Dialogue Manager" type="Control" node_paths=PackedStringArray("transform_control", "text_display", "dialogue_box", "text_noise", "NPC_nameplate", "npc_sprite", "player_nameplate", "player_sprite", "intro_list")]
 layout_mode = 3
@@ -24,28 +37,36 @@ intro_list = NodePath("Dialogue Lists/Intro List")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="transform control" type="Control" parent="CanvasLayer"]
+z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Player Nameplate" type="Label" parent="CanvasLayer/transform control"]
 layout_mode = 0
-offset_left = -9.0
-offset_top = 269.0
-offset_right = 40.0
-offset_bottom = 292.0
+offset_top = 447.0
+offset_right = 95.0
+offset_bottom = 493.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_w0wv0")
 text = "Player"
 
 [node name="NPC Nameplate" type="Label" parent="CanvasLayer/transform control"]
 layout_mode = 0
-offset_left = 1085.0
-offset_top = 284.0
-offset_right = 1134.0
-offset_bottom = 307.0
-text = "NPC"
+offset_left = 918.0
+offset_top = 453.0
+offset_right = 1152.0
+offset_bottom = 499.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_w0wv0")
+text = "NPC Name here"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Dialogue Box" type="PanelContainer" parent="CanvasLayer/transform control"]
 layout_mode = 1
@@ -53,16 +74,24 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_bottom = 157.0
+offset_top = 167.0
+offset_bottom = 324.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1af3")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/transform control/Dialogue Box"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Player Sprite" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(-180, 400)
+texture = ExtResource("3_3xf5m")
 
 [node name="NPC Sprite" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1500, 400)
+texture = ExtResource("3_3xf5m")
 
 [node name="Dialogue Lists" type="Node" parent="."]
 

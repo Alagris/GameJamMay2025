@@ -1,5 +1,7 @@
 extends Node2D
 
+var power_on:bool = true #used for electricity based lights
+
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var label = $Label
 
@@ -9,10 +11,14 @@ var can_interact = true
 func register_area(a: Item):
 	active_areas.push_back(a)
 	
+	
 func unregister_area(a: Item):
 	var i = active_areas.find(a)
 	if i > -1:
 		active_areas.remove_at(i)
+
+func _ready():
+	$AnimationPlayer.play("Animate Text")
 
 func _process(delta: float) -> void:
 	if can_interact && active_areas.size()>0:
@@ -36,7 +42,8 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if can_interact && nearest_area != null && event.is_action_pressed("interact"):
 		can_interact = false
-		label.hide()
+		label.set_visible(nearest_area.reusable_interaction)
 		await nearest_area.interact.call()
+		print("interaction manager test pass")
 		can_interact = true
 			

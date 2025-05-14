@@ -7,6 +7,9 @@ extends Control
 @export var dialogue_speed:DIALOGUE_SPEED = DIALOGUE_SPEED.NORMAL
 enum DIALOGUE_SPEED {SLOW,NORMAL,FAST}
 
+func _ready():
+	RenderingServer.set_default_clear_color(Color(0,0,0,1))
+
 func _on_sfx_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(SFX_BUS_ID,linear_to_db(value))
 	print(value)

@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=8 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://dq7rjoj2acmjh" path="res://scenes/light_object.tscn" id="4_ftt0s"]
+[ext_resource type="Script" path="res://scenes/first_letter.gd" id="4_ir4rp"]
 [ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="4_k0juu"]
+[ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="4_nst5r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
 radius = 35.0143
@@ -16,8 +19,24 @@ position = Vector2(371, 117)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
-[node name="letter" parent="." instance=ExtResource("4_k0juu")]
+[node name="Lights" type="Node" parent="."]
+
+[node name="Light Object" parent="Lights" instance=ExtResource("4_ftt0s")]
+position = Vector2(440, -36)
+scale = Vector2(5, 5)
+
+[node name="Pick Up Items" type="Node" parent="."]
+
+[node name="First Letter" type="Node2D" parent="Pick Up Items"]
+script = ExtResource("4_ir4rp")
+
+[node name="Sprite2D" type="Sprite2D" parent="Pick Up Items/First Letter"]
+position = Vector2(298, 103)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_nst5r")
+
+[node name="letter" parent="Pick Up Items/First Letter" instance=ExtResource("4_k0juu")]
 position = Vector2(298, 103)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="letter"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pick Up Items/First Letter/letter"]
 shape = SubResource("CircleShape2D_71j4m")

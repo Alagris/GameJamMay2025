@@ -1,6 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://xy510p2nbokg"]
 
-[ext_resource type="Script" path="res://scenes/interaction_manager.gd" id="1_rddhf"]
+[ext_resource type="Script" uid="uid://dj31833duiv6h" path="res://scenes/interaction_manager.gd" id="1_rddhf"]
+
+[sub_resource type="Animation" id="Animation_3q8fd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_fjnqj"]
 resource_name = "Animate Text"
@@ -19,25 +34,10 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.1, 1.1)]
 }
 
-[sub_resource type="Animation" id="Animation_3q8fd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Label:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6tgns"]
 _data = {
-&"RESET": SubResource("Animation_3q8fd"),
-&"Animate Text": SubResource("Animation_fjnqj")
+&"Animate Text": SubResource("Animation_fjnqj"),
+&"RESET": SubResource("Animation_3q8fd")
 }
 
 [node name="interaction_manager" type="Node2D"]

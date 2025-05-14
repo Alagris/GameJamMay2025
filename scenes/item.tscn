@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c5jitd1882acy"]
 
-[ext_resource type="Script" path="res://scenes/item.gd" id="1_errlg"]
+[ext_resource type="Script" uid="uid://sfhcym2tqler" path="res://scenes/item.gd" id="1_errlg"]
 
 [node name="Area2D" type="Area2D"]
 collision_layer = 0

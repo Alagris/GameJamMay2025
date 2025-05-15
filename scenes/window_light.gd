@@ -4,4 +4,4 @@ extends PointLight2D
 
 
 func _ready():
-	energy = 0.1
+	energy = 0.05

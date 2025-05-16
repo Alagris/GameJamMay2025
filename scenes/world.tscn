@@ -1,25 +1,44 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=14 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://dq7rjoj2acmjh" path="res://scenes/light_object.tscn" id="4_ftt0s"]
 [ext_resource type="Texture2D" uid="uid://bl1vdxxpjta47" path="res://assets/effects/light.png" id="4_i7141"]
-[ext_resource type="Script" uid="uid://ckweb8e0w40o0" path="res://scenes/first_letter.gd" id="4_ir4rp"]
+[ext_resource type="Script" path="res://scenes/first_letter.gd" id="4_ir4rp"]
 [ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="4_k0juu"]
 [ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="4_nst5r"]
+[ext_resource type="Script" path="res://scenes/teleport_areas.gd" id="8_ro1d2"]
+
+[sub_resource type="Gradient" id="Gradient_iqvcx"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x8rsa"]
+gradient = SubResource("Gradient_iqvcx")
+width = 5000
+height = 5000
+fill = 1
+fill_from = Vector2(0.509174, 0.5)
+fill_to = Vector2(0.917431, 0.12844)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7ls7u"]
+polygon = PackedVector2Array(-30, -3, 33, -3, 33, -36, -30, -36)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
 radius = 35.0143
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fg684"]
+size = Vector2(96, 135)
 
 [node name="World" type="Node2D"]
 
 [node name="Map" parent="." instance=ExtResource("1_rwgxs")]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Map"]
-color = Color(0.0687983, 0.0687983, 0.0687982, 1)
+color = Color(0.0605303, 0.0605304, 0.0605303, 1)
 
-[node name="player" parent="." groups=["player"] instance=ExtResource("2_4wyf3")]
-position = Vector2(150, -434)
+[node name="player" parent="." node_paths=PackedStringArray("canvas_modulate") groups=["player"] instance=ExtResource("2_4wyf3")]
+position = Vector2(1400, -93)
+canvas_modulate = NodePath("../Map/CanvasModulate")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
@@ -39,28 +58,63 @@ position = Vector2(121, -429)
 scale = Vector2(5, 5)
 light_on = false
 
-[node name="Window" type="PointLight2D" parent="Lights"]
+[node name="windows" type="Node" parent="Lights"]
+
+[node name="outside light" type="PointLight2D" parent="Lights/windows"]
+position = Vector2(-935, -3007)
+color = Color(0, 0, 0, 1)
+shadow_enabled = true
+shadow_color = Color(0.329158, 0.329158, 0.329158, 0.443137)
+shadow_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_x8rsa")
+
+[node name="window 1 beam" type="LightOccluder2D" parent="Lights/windows"]
+position = Vector2(-232, -755)
+occluder = SubResource("OccluderPolygon2D_7ls7u")
+occluder_light_mask = 2
+
+[node name="window 2 beam" type="LightOccluder2D" parent="Lights/windows"]
+position = Vector2(232, -755)
+occluder = SubResource("OccluderPolygon2D_7ls7u")
+occluder_light_mask = 2
+
+[node name="window 3 beam" type="LightOccluder2D" parent="Lights/windows"]
+position = Vector2(504, -755)
+occluder = SubResource("OccluderPolygon2D_7ls7u")
+occluder_light_mask = 2
+
+[node name="window 4 beam" type="LightOccluder2D" parent="Lights/windows"]
+position = Vector2(984, -755)
+occluder = SubResource("OccluderPolygon2D_7ls7u")
+occluder_light_mask = 2
+
+[node name="windoe 5 beam" type="LightOccluder2D" parent="Lights/windows"]
+position = Vector2(1384, -755)
+occluder = SubResource("OccluderPolygon2D_7ls7u")
+occluder_light_mask = 2
+
+[node name="Window" type="PointLight2D" parent="Lights/windows"]
 position = Vector2(1384, -768)
 energy = 0.1
 texture = ExtResource("4_i7141")
 texture_scale = 0.78
 
-[node name="Window2" type="PointLight2D" parent="Lights"]
+[node name="Window2" type="PointLight2D" parent="Lights/windows"]
 position = Vector2(988, -768)
 energy = 0.1
 texture = ExtResource("4_i7141")
 
-[node name="Window3" type="PointLight2D" parent="Lights"]
+[node name="Window3" type="PointLight2D" parent="Lights/windows"]
 position = Vector2(502, -770)
 energy = 0.1
 texture = ExtResource("4_i7141")
 
-[node name="Window4" type="PointLight2D" parent="Lights"]
+[node name="Window4" type="PointLight2D" parent="Lights/windows"]
 position = Vector2(231, -773)
 energy = 0.1
 texture = ExtResource("4_i7141")
 
-[node name="Window5" type="PointLight2D" parent="Lights"]
+[node name="Window5" type="PointLight2D" parent="Lights/windows"]
 position = Vector2(-220, -776)
 energy = 0.1
 texture = ExtResource("4_i7141")
@@ -80,3 +134,20 @@ position = Vector2(298, 103)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pick Up Items/First Letter/letter"]
 shape = SubResource("CircleShape2D_71j4m")
+
+[node name="Teleport Areas" type="Node" parent="." node_paths=PackedStringArray("player", "teleport_position_basement")]
+script = ExtResource("8_ro1d2")
+player = NodePath("../player")
+teleport_position_basement = NodePath("teleport position basement")
+
+[node name="teleport to basement" type="Area2D" parent="Teleport Areas"]
+position = Vector2(1488, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Teleport Areas/teleport to basement"]
+position = Vector2(0, -15.5)
+shape = SubResource("RectangleShape2D_fg684")
+
+[node name="teleport position basement" type="Node2D" parent="Teleport Areas"]
+position = Vector2(1091, -103)
+
+[connection signal="body_entered" from="Teleport Areas/teleport to basement" to="Teleport Areas" method="_on_teleport_to_basement_body_entered"]

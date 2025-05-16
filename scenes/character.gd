@@ -1,7 +1,14 @@
 extends CharacterBody2D
 
-const SPEED:float = 100
+const SPEED:float = 120
 
+@export var canvas_modulate:CanvasModulate
+var canvas_modulate_original_color:Color
+
+var transition_time:float = 1.0
+
+
+@export var player_light:PointLight2D
 @onready var animated_sprite:AnimatedSprite2D = $animated_spite
 const IDLE = 0
 const WALK = 1
@@ -13,6 +20,11 @@ const DIR_CHAR = ["L", "R", "F", "B"]
 const STATE_ANIM_NAME = ["idle", "walk"]
 var state_int = IDLE
 var dir_int = F
+
+var can_control:bool = true
+
+func _ready():
+	canvas_modulate_original_color = canvas_modulate.get_color()
 
 func _process(delta : float) -> void:
 	pass
@@ -35,7 +47,40 @@ func _physics_process(delta: float) -> void:
 		dir_int = R
 	else:
 		state_int = IDLE
-	animated_sprite.play(STATE_ANIM_NAME[state_int]+DIR_CHAR[dir_int])
-	move_and_slide()
+		
+	match can_control:
+		true:
+			animated_sprite.play(STATE_ANIM_NAME[state_int]+DIR_CHAR[dir_int])
+			move_and_slide()
+		false:
+			state_int = IDLE
+			animated_sprite.play(STATE_ANIM_NAME[state_int]+DIR_CHAR[dir_int])
 	
 	
+
+
+func scale_modulate(new_color:Color):
+	var tween = create_tween()
+	tween.tween_property(canvas_modulate,"color",new_color,transition_time)
+
+func scale_light(new_scale:Vector2):
+	var tween = create_tween()
+	Tween
+	tween.tween_property(player_light,"scale",new_scale,transition_time)
+
+func teleport(location:Vector2):
+	print("teleport requested")
+	can_control = false
+	
+	scale_modulate(Color(0,0,0,1))
+	scale_light(Vector2(.2,.2))
+	await get_tree().create_timer(transition_time,true).timeout
+	
+	self.global_position = location
+	
+	scale_modulate(canvas_modulate_original_color)
+	scale_light(Vector2(1.0,1.0))
+	await get_tree().create_timer(transition_time,true).timeout
+	
+	can_control = true
+	print("teleport complete")

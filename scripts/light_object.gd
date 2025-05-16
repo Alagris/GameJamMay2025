@@ -9,6 +9,7 @@ var light_distance_scale:Vector2
 
 
 func _ready():
+	self.add_to_group("powered object")
 	light_distance_scale = self.scale
 	match light_on:
 		true:

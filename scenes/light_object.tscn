@@ -26,7 +26,10 @@ texture = SubResource("GradientTexture2D_nse26")
 
 [node name="Area2D" parent="." instance=ExtResource("2_3kji8")]
 action_name = "Turn On"
-reusable_interaction = true
+requires_power = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_erat4")
+
+[node name="flick sound" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"

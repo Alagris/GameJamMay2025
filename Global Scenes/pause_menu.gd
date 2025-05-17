@@ -8,9 +8,19 @@ extends Control
 @export var mouse_motion_timer:Timer
 @export var button_box:VBoxContainer
 
+@export var battery_icon:PackedScene
+@export var battery_container:HBoxContainer
+var battery_array:Array = []
+
+@export var fuse_1:TextureRect
+@export var fuse_2:TextureRect
+@export var fuse_3:TextureRect
+var fuse_array:Array = []
+
 var game_pausable:bool = true
 var pause_state:bool = false
 var current_menu:Control = self
+
 
 func _ready():
 	menu_root.hide()
@@ -18,6 +28,39 @@ func _ready():
 	settings_menu.hide()
 	pause_button.show()
 	back_button.hide()
+	fuse_array.append(fuse_1)
+	fuse_array.append(fuse_2)
+	fuse_array.append(fuse_3)
+
+func update_inventory():
+	var current_batteries:int = SaveManager.battery_count
+	var old_batteries:int = battery_array.size()
+	var difference = absi(current_batteries - old_batteries)
+	if current_batteries > old_batteries:
+		for i in difference:
+			spawn_battery()
+	if old_batteries > current_batteries:
+		for i in difference:
+			delete_battery()
+	for i in fuse_array.size():
+		if SaveManager.fuse_count > i:
+			fuse_array[i].show()
+			continue
+		fuse_array[i].hide()
+	
+	
+
+func spawn_battery():
+	print("spawn battery")
+	var battery_instance = battery_icon.instantiate()
+	battery_array.append(battery_instance)
+	battery_container.call_deferred("add_child",battery_instance)
+
+func delete_battery():
+	print("delete battery")
+	battery_array[0].call_deferred("queue_free")
+	battery_array.pop_front()
+
 
 
 
@@ -49,6 +92,7 @@ func pause():
 			pause_activate()
 
 func pause_activate():
+	update_inventory()
 	menu_root.show()
 	pause_button.hide()
 	get_tree().paused = true

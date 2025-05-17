@@ -21,10 +21,12 @@ AudioManager="*res://Global Scenes/audio_manager.tscn"
 PauseMenu="*res://Global Scenes/pause_menu.tscn"
 DialogueManager="*res://Global Scenes/dialogue_manager.tscn"
 InteractionManager="*res://scenes/interaction_manager.tscn"
+SaveManager="*res://Global Scenes/save_manager.tscn"
 
 [display]
 
 window/stretch/mode="canvas_items"
+window/vsync/vsync_mode=0
 
 [input]
 

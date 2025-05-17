@@ -9,13 +9,15 @@ var light_distance_scale:Vector2
 
 
 func _ready():
-	self.add_to_group("powered object")
+	InteractionManager.powered_objects.append(self)
 	light_distance_scale = self.scale
 	match light_on:
 		true:
 			$Area2D.action_name = "Turn Off"
+			turn_on()
 		false:
 			$Area2D.action_name = "Turn On"
+			turn_off()
 			$"Light Object".scale = Vector2(0,0)
 			
 	match light_type:
@@ -27,25 +29,30 @@ func _ready():
 			pass
 
 func interact():
-	if InteractionManager.power_on == false:
-		return
+	$"flick sound".play()
 	match light_on:
 		true:
 			turn_off()
 			light_on = false
 			$Area2D.action_name = "Turn On"
 		false:
-			turn_on()
 			light_on = true
+			turn_on()
 			$Area2D.action_name = "Turn Off"
 
+func power_on():
+	if light_on:
+		turn_on()
 
-
+func power_off():
+	if light_on:
+		turn_off()
 
 func turn_off():
 	var tween = create_tween()
 	tween.tween_property($"Light Object","scale",Vector2(0,0),1.0)
 
 func turn_on():
-	var tween = create_tween()
-	tween.tween_property($"Light Object","scale",Vector2(1,1),1.0)
+	if InteractionManager.power_on == true:
+		var tween = create_tween()
+		tween.tween_property($"Light Object","scale",Vector2(1,1),1.0)

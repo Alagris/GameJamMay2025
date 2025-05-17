@@ -52,6 +52,10 @@ func _physics_process(delta: float) -> void:
 		true:
 			animated_sprite.play(STATE_ANIM_NAME[state_int]+DIR_CHAR[dir_int])
 			move_and_slide()
+			if state_int == WALK:
+				if $"audio/footstep timer".is_stopped():
+					$"audio/footstep timer".start()
+					$"audio/footstep sounds".play()
 		false:
 			state_int = IDLE
 			animated_sprite.play(STATE_ANIM_NAME[state_int]+DIR_CHAR[dir_int])
@@ -84,3 +88,11 @@ func teleport(location:Vector2):
 	
 	can_control = true
 	print("teleport complete")
+
+
+func _on_footstep_timer_timeout():
+	if state_int == IDLE:
+		print("idling no sounds playing")
+		$"audio/footstep timer".stop()
+		return
+	$"audio/footstep sounds".play()

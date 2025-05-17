@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccgjeo3c31puq"]
+
+[ext_resource type="Texture2D" uid="uid://cj70xfovi07q5" path="res://assets/Cab's Pixel Art/Battery.png" id="1_qevgw"]
+
+[node name="TextureRect" type="TextureRect"]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("1_qevgw")

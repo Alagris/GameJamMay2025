@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dujhpsxeae0d1"]
+[gd_scene load_steps=12 format=3 uid="uid://dujhpsxeae0d1"]
 
 [ext_resource type="Script" path="res://Global Scenes/pause_menu.gd" id="1_yfb6i"]
+[ext_resource type="PackedScene" uid="uid://ccgjeo3c31puq" path="res://scenes/UI/battery_inventory.tscn" id="2_6nlbs"]
 [ext_resource type="PackedScene" uid="uid://td42gcl31vog" path="res://scenes/UI/ui_button.tscn" id="2_7aqyc"]
 [ext_resource type="PackedScene" uid="uid://cgmn2l0nci2dk" path="res://scenes/UI/credits_menu.tscn" id="3_3c5p2"]
+[ext_resource type="Texture2D" uid="uid://dwnk2ya84akeh" path="res://assets/Cab's Pixel Art/Fuse.png" id="3_icfmf"]
 [ext_resource type="PackedScene" uid="uid://dbkgdvdbcrj56" path="res://scenes/UI/settings_menu.tscn" id="4_4sr76"]
 [ext_resource type="Texture2D" uid="uid://cagwythhkux2g" path="res://assets/Lucid V1.2 Icon Pack/Gear.png" id="4_5phja"]
 [ext_resource type="StyleBox" uid="uid://6sxf1yvy5afb" path="res://Styles/button hover.tres" id="5_22vuh"]
@@ -23,7 +25,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(1, 1, 1, 1)
 
-[node name="Pause Menu" type="Control" node_paths=PackedStringArray("settings_menu", "credits_menu", "back_button", "menu_root", "pause_button", "mouse_motion_timer", "button_box")]
+[node name="Pause Menu" type="Control" node_paths=PackedStringArray("settings_menu", "credits_menu", "back_button", "menu_root", "pause_button", "mouse_motion_timer", "button_box", "battery_container", "fuse_1", "fuse_2", "fuse_3")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -39,6 +41,11 @@ menu_root = NodePath("CanvasLayer/menu_root")
 pause_button = NodePath("spaghetti 1/pause button")
 mouse_motion_timer = NodePath("Mouse Motion Timer")
 button_box = NodePath("CanvasLayer/menu_root/button box")
+battery_icon = ExtResource("2_6nlbs")
+battery_container = NodePath("CanvasLayer/menu_root/Inventory Display/VBoxContainer2/Battery section/battery container")
+fuse_1 = NodePath("CanvasLayer/menu_root/Inventory Display/VBoxContainer/HBoxContainer/Fuse")
+fuse_2 = NodePath("CanvasLayer/menu_root/Inventory Display/VBoxContainer/HBoxContainer/Fuse2")
+fuse_3 = NodePath("CanvasLayer/menu_root/Inventory Display/VBoxContainer/HBoxContainer/Fuse3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -49,6 +56,74 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Inventory Display" type="Control" parent="CanvasLayer/menu_root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/menu_root/Inventory Display"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 100.0
+grow_horizontal = 0
+
+[node name="Battery section" type="VBoxContainer" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer2/Battery section"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Batteries"
+horizontal_alignment = 2
+
+[node name="battery container" type="HBoxContainer" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer2/Battery section"]
+layout_mode = 2
+
+[node name="TextureRect" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer2/Battery section/battery container" instance=ExtResource("2_6nlbs")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/menu_root/Inventory Display"]
+layout_mode = 2
+offset_left = 994.0
+offset_top = 117.26
+offset_right = 1152.0
+offset_bottom = 249.26
+
+[node name="Label" type="Label" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Fuses"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="Fuse" type="TextureRect" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_icfmf")
+
+[node name="Fuse2" type="TextureRect" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_icfmf")
+
+[node name="Fuse3" type="TextureRect" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_icfmf")
 
 [node name="Settings Menu" parent="CanvasLayer/menu_root" instance=ExtResource("4_4sr76")]
 visible = false

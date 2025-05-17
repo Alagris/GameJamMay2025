@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cg5sc7qo5kriu"]
+
+[ext_resource type="Script" path="res://fuse_box.gd" id="1_alx8v"]
+[ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="1_cmjkg"]
+[ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="2_5bbjq"]
+[ext_resource type="Texture2D" uid="uid://dwnk2ya84akeh" path="res://assets/Cab's Pixel Art/Fuse.png" id="4_gwhng"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a1nak"]
+radius = 144.003
+
+[node name="Fuse Box" type="Node2D" node_paths=PackedStringArray("fuse_1_texture", "fuse_2_texture", "fuse_3_texture")]
+script = ExtResource("1_alx8v")
+fuse_1_texture = NodePath("Control/HBoxContainer/Fuse 1")
+fuse_2_texture = NodePath("Control/HBoxContainer/Fuse 2")
+fuse_3_texture = NodePath("Control/HBoxContainer/Fuse 3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cmjkg")
+
+[node name="Area2D" parent="." instance=ExtResource("2_5bbjq")]
+action_name = "Insert Fuse"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_a1nak")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -80.0
+offset_top = -168.0
+offset_right = -40.0
+offset_bottom = -128.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Fuse 1" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_gwhng")
+
+[node name="Fuse 2" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_gwhng")
+
+[node name="Fuse 3" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_gwhng")

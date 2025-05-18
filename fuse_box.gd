@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var fuse_in_sound:AudioStreamPlayer2D
+@export var fuse_out_sound:AudioStreamPlayer2D
+
 @export var fuse_1_texture:TextureRect
 @export var fuse_2_texture:TextureRect
 @export var fuse_3_texture:TextureRect
@@ -20,6 +23,7 @@ func interact():
 		SaveManager.fuse_count -= 1
 		fuse_array[fuse_count].self_modulate = Color(1,1,1,1)
 		fuse_count += 1
+		fuse_out_sound.play()
 	if fuse_count == 3:
 		$Area2D.currently_active = false
 		activate_power()

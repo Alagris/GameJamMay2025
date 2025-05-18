@@ -26,7 +26,8 @@ func _ready():
 
 func _process(delta: float) -> void:
 	if can_interact == false:
-		print("can interact is false")
+		pass
+		#print("can interact is false")
 	if can_interact && active_areas.size()>0:
 		var player_pos:Vector2 = player.global_position
 		var nearest_dist = active_areas[0].global_position.distance_to(player_pos)
@@ -39,24 +40,24 @@ func _process(delta: float) -> void:
 		#can_interact = nearest_area.currently_active
 		match nearest_area.currently_active:
 			true:
-				print("showing label")
+				#print("showing label")
 				label.text = '[E] '+nearest_area.action_name
 				label.global_position = nearest_area.global_position
 				label.global_position.y -= 36
 				label.global_position.x -= label.size.x/2
 				label.show()
 			false:
-				print("current area not active")
+				#print("current area not active")
 				label.hide()
 			_:
 				print("error interaction manager")
 	else:
-		print("nearest area hide label")
+		#print("nearest area hide label")
 		nearest_area = null
 		label.hide()
 		
 func _input(event: InputEvent) -> void:
-	print("interaction test")
+	#print("interaction test")
 	if can_interact && nearest_area != null && event.is_action_pressed("interact"):
 		can_interact = false
 		label.set_visible(nearest_area.currently_active)

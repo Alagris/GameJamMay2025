@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://frr4ng78hjxi"
+path="res://.godot/imported/Large Stones Drag B.wav-d97087323e34495d5c98d4da27ee33df.sample"
+
+[deps]
+
+source_file="res://assets/SFX/Large Stones Drag B.wav"
+dest_files=["res://.godot/imported/Large Stones Drag B.wav-d97087323e34495d5c98d4da27ee33df.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

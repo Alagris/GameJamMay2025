@@ -1,15 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://cg5sc7qo5kriu"]
+[gd_scene load_steps=8 format=3 uid="uid://cg5sc7qo5kriu"]
 
 [ext_resource type="Script" path="res://fuse_box.gd" id="1_alx8v"]
 [ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="1_cmjkg"]
 [ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="2_5bbjq"]
 [ext_resource type="Texture2D" uid="uid://dwnk2ya84akeh" path="res://assets/Cab's Pixel Art/Fuse.png" id="4_gwhng"]
+[ext_resource type="AudioStream" uid="uid://2ybwbcq3qo7v" path="res://assets/SFX/Fuse In.wav" id="5_v8p4e"]
+[ext_resource type="AudioStream" uid="uid://cqnr88hgaa7k3" path="res://assets/SFX/Fuse out.wav" id="6_3gixl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a1nak"]
 radius = 144.003
 
-[node name="Fuse Box" type="Node2D" node_paths=PackedStringArray("fuse_1_texture", "fuse_2_texture", "fuse_3_texture")]
+[node name="Fuse Box" type="Node2D" node_paths=PackedStringArray("fuse_in_sound", "fuse_out_sound", "fuse_1_texture", "fuse_2_texture", "fuse_3_texture")]
 script = ExtResource("1_alx8v")
+fuse_in_sound = NodePath("Fuse In")
+fuse_out_sound = NodePath("Fuse Out")
 fuse_1_texture = NodePath("Control/HBoxContainer/Fuse 1")
 fuse_2_texture = NodePath("Control/HBoxContainer/Fuse 2")
 fuse_3_texture = NodePath("Control/HBoxContainer/Fuse 3")
@@ -52,3 +56,12 @@ texture = ExtResource("4_gwhng")
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("4_gwhng")
+
+[node name="Fuse In" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_v8p4e")
+bus = &"SFX"
+
+[node name="Fuse Out" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_3gixl")
+volume_db = 3.0
+bus = &"SFX"

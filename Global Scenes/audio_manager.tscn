@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://u2088k2q6scu"]
+[gd_scene load_steps=5 format=3 uid="uid://u2088k2q6scu"]
 
 [ext_resource type="Script" path="res://Global Scenes/audio_manager.gd" id="1_n5xl5"]
+[ext_resource type="AudioStream" uid="uid://38nexjsdb1ww" path="res://assets/SFX/UI Sounds/Cozy UI B.wav" id="2_r7k10"]
+[ext_resource type="AudioStream" uid="uid://pphf02mao8tn" path="res://assets/SFX/UI Sounds/Cozy UI S.wav" id="3_nge0f"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hkpgl"]
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_r7k10")
 
 [node name="Audio Manager" type="Node" node_paths=PackedStringArray("UI_Hover_audio", "UI_Pressed_audio", "ambiance_1", "ambiance_2", "ambiance_3")]
 process_mode = 3
@@ -12,12 +19,21 @@ ambiance_2 = NodePath("Ambiance Organizer/ambiance 2")
 ambiance_3 = NodePath("Ambiance Organizer/ambiance 3")
 
 [node name="UI Hover" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_hkpgl")
+volume_db = -3.0
+pitch_scale = 1.7
+max_polyphony = 2
+bus = &"SFX"
 
 [node name="UI Pressed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_nge0f")
+volume_db = 5.0
+bus = &"SFX"
 
 [node name="Music Stream Organizer" type="Node" parent="."]
 
 [node name="Music 1" type="AudioStreamPlayer2D" parent="Music Stream Organizer"]
+bus = &"Music"
 
 [node name="Ambiance Organizer" type="Node" parent="."]
 

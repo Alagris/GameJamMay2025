@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq7rjoj2acmjh"]
+[gd_scene load_steps=7 format=3 uid="uid://dq7rjoj2acmjh"]
 
 [ext_resource type="Script" path="res://scripts/light_object.gd" id="1_lc526"]
 [ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="2_3kji8"]
+[ext_resource type="AudioStream" uid="uid://2ybwbcq3qo7v" path="res://assets/SFX/Fuse In.wav" id="3_lcgls"]
 
 [sub_resource type="Gradient" id="Gradient_lsx4t"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -32,4 +33,5 @@ requires_power = true
 shape = SubResource("CircleShape2D_erat4")
 
 [node name="flick sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_lcgls")
 bus = &"SFX"

@@ -96,3 +96,10 @@ func _on_footstep_timer_timeout():
 		$"audio/footstep timer".stop()
 		return
 	$"audio/footstep sounds".play()
+
+func replace_battery():
+	can_control = false
+	
+	
+	await get_tree().create_timer(1.0,true).timeout
+	can_control = true

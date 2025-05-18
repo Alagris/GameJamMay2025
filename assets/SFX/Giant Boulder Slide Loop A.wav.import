@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c0ys77y2pis63"
+path="res://.godot/imported/Giant Boulder Slide Loop A.wav-8bed4abd44e16284f4299c6fa9f5f0f3.sample"
+
+[deps]
+
+source_file="res://assets/SFX/Giant Boulder Slide Loop A.wav"
+dest_files=["res://.godot/imported/Giant Boulder Slide Loop A.wav-8bed4abd44e16284f4299c6fa9f5f0f3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

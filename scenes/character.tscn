@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://cyh7ier5pw2jc"]
+[gd_scene load_steps=86 format=3 uid="uid://cyh7ier5pw2jc"]
 
 [ext_resource type="Texture2D" uid="uid://c6nfmtol6fa18" path="res://assets/characters/Adam_16x16.png" id="1_agfs1"]
 [ext_resource type="Script" path="res://scenes/character.gd" id="1_rkhd4"]
@@ -6,7 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://clh50s76ltuem" path="res://assets/SFX/Footsteps/step 1.wav" id="4_e8rby"]
 [ext_resource type="AudioStream" uid="uid://dacq6mamkttx8" path="res://assets/SFX/Footsteps/step 2.wav" id="5_4ns7j"]
 [ext_resource type="AudioStream" uid="uid://bep7pbkcj1rcw" path="res://assets/SFX/Footsteps/step 3.wav" id="6_pbx6u"]
-[ext_resource type="AudioStream" uid="uid://dm5rvkdqqljv6" path="res://assets/SFX/Footsteps/step 4.wav" id="7_an4hj"]
+[ext_resource type="Script" path="res://scenes/flashlight.gd" id="7_bbdrw"]
+[ext_resource type="Texture2D" uid="uid://cj70xfovi07q5" path="res://assets/Cab's Pixel Art/Battery.png" id="8_gkgc5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rkhd4"]
 atlas = ExtResource("1_agfs1")
@@ -534,11 +535,149 @@ radius = 14.0
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3py5w"]
 random_pitch = 1.1
 random_volume_offset_db = 1.0
-streams_count = 4
+streams_count = 3
 stream_0/stream = ExtResource("4_e8rby")
 stream_1/stream = ExtResource("5_4ns7j")
 stream_2/stream = ExtResource("6_pbx6u")
-stream_3/stream = ExtResource("7_an4hj")
+
+[sub_resource type="Gradient" id="Gradient_ix4ho"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mlsbg"]
+gradient = SubResource("Gradient_ix4ho")
+width = 500
+height = 1000
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7, 0.3)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e7pqx"]
+polygon = PackedVector2Array(0, 0, 30, -90, 25, -90, 0, -1, -25, -90, -30, -90)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvxf0"]
+bg_color = Color(0.647103, 0.532347, 0.375577, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ey6io"]
+bg_color = Color(0.0624382, 0.632288, 0.0321123, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_m8fkc"]
+resource_name = "replace"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("battery cartridge:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.733333, 1.16667, 2),
+"transitions": PackedFloat32Array(-2, 1, -2, -2),
+"update": 0,
+"values": [Vector2(0, -28), Vector2(8, -35), Vector2(10, -30), Vector2(20, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("battery cartridge:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("battery cartridge:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("battery cartridge:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.566667, 1.13333, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.1, 0.1), Vector2(0.1, 0.1), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ja6dl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("battery cartridge:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("battery cartridge:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.1, 0.1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("battery cartridge:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("battery cartridge:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -28)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jsp3o"]
+_data = {
+&"replace": SubResource("Animation_m8fkc"),
+&"RESET": SubResource("Animation_ja6dl")
+}
 
 [node name="character" type="CharacterBody2D" node_paths=PackedStringArray("player_light")]
 collision_layer = 3
@@ -574,4 +713,57 @@ bus = &"SFX"
 [node name="footstep timer" type="Timer" parent="audio"]
 wait_time = 0.6
 
+[node name="flashlight" type="Node2D" parent="." node_paths=PackedStringArray("pointlight", "battery_timer")]
+position = Vector2(0, -14)
+script = ExtResource("7_bbdrw")
+pointlight = NodePath("PointLight2D")
+battery_timer = NodePath("battery timer")
+
+[node name="PointLight2D" type="PointLight2D" parent="flashlight"]
+rotation = 1.5708
+shadow_enabled = true
+shadow_item_cull_mask = 5
+texture = SubResource("GradientTexture2D_mlsbg")
+offset = Vector2(0, -200)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="flashlight"]
+position = Vector2(-11, 0)
+rotation = 1.5708
+occluder = SubResource("OccluderPolygon2D_e7pqx")
+occluder_light_mask = 4
+
+[node name="battery timer" type="Timer" parent="flashlight"]
+wait_time = 0.2
+autostart = true
+
+[node name="replace battery prompt" type="Label" parent="."]
+offset_left = -84.0
+offset_top = -94.0
+offset_right = 88.0
+offset_bottom = -71.0
+text = "[RMB] Replace Battery"
+
+[node name="activity bar" type="ProgressBar" parent="."]
+offset_left = 16.0
+offset_top = -73.0
+offset_right = 97.0
+offset_bottom = -62.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fvxf0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ey6io")
+value = 50.0
+show_percentage = false
+
+[node name="battery cartridge" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -28)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("8_gkgc5")
+
+[node name="battery animation" type="AnimationPlayer" parent="battery cartridge"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_jsp3o")
+}
+
 [connection signal="timeout" from="audio/footstep timer" to="." method="_on_footstep_timer_timeout"]
+[connection signal="timeout" from="flashlight/battery timer" to="flashlight" method="_on_battery_timer_timeout"]

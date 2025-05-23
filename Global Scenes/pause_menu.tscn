@@ -88,9 +88,6 @@ horizontal_alignment = 2
 [node name="battery container" type="HBoxContainer" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer2/Battery section"]
 layout_mode = 2
 
-[node name="TextureRect" parent="CanvasLayer/menu_root/Inventory Display/VBoxContainer2/Battery section/battery container" instance=ExtResource("2_6nlbs")]
-layout_mode = 2
-
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/menu_root/Inventory Display"]
 layout_mode = 2
 offset_left = 994.0

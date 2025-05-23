@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://cyh7ier5pw2jc"]
+[gd_scene load_steps=87 format=3 uid="uid://cyh7ier5pw2jc"]
 
 [ext_resource type="Texture2D" uid="uid://c6nfmtol6fa18" path="res://assets/characters/Adam_16x16.png" id="1_agfs1"]
 [ext_resource type="Script" path="res://scenes/character.gd" id="1_rkhd4"]
@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://bep7pbkcj1rcw" path="res://assets/SFX/Footsteps/step 3.wav" id="6_pbx6u"]
 [ext_resource type="Script" path="res://scenes/flashlight.gd" id="7_bbdrw"]
 [ext_resource type="Texture2D" uid="uid://cj70xfovi07q5" path="res://assets/Cab's Pixel Art/Battery.png" id="8_gkgc5"]
+[ext_resource type="AudioStream" uid="uid://2ybwbcq3qo7v" path="res://assets/SFX/Fuse In.wav" id="8_l8lgy"]
+[ext_resource type="Script" path="res://scenes/line_of_signt.gd" id="9_0vk0v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rkhd4"]
 atlas = ExtResource("1_agfs1")
@@ -554,6 +556,10 @@ fill_to = Vector2(0.7, 0.3)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e7pqx"]
 polygon = PackedVector2Array(0, 0, 30, -90, 25, -90, 0, -1, -25, -90, -30, -90)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_syno0"]
+radius = 63.0
+height = 454.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvxf0"]
 bg_color = Color(0.647103, 0.532347, 0.375577, 1)
 border_width_left = 1
@@ -570,114 +576,10 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Animation" id="Animation_m8fkc"]
-resource_name = "replace"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("battery cartridge:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.733333, 1.16667, 2),
-"transitions": PackedFloat32Array(-2, 1, -2, -2),
-"update": 0,
-"values": [Vector2(0, -28), Vector2(8, -35), Vector2(10, -30), Vector2(20, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("battery cartridge:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("battery cartridge:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("battery cartridge:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.566667, 1.13333, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0.1, 0.1), Vector2(0.1, 0.1), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_ja6dl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("battery cartridge:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("battery cartridge:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.1, 0.1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("battery cartridge:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("battery cartridge:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -28)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jsp3o"]
-_data = {
-&"replace": SubResource("Animation_m8fkc"),
-&"RESET": SubResource("Animation_ja6dl")
-}
+[sub_resource type="Curve" id="Curve_ounm3"]
+max_value = 100.0
+_data = [Vector2(0.0280899, 0), 0.0, 0.0, 0, 0, Vector2(0.668539, 3.29671), 0.0, 0.0, 0, 0, Vector2(1, 31.8681), 120.372, 0.0, 0, 0]
+point_count = 3
 
 [node name="character" type="CharacterBody2D" node_paths=PackedStringArray("player_light")]
 collision_layer = 3
@@ -713,11 +615,15 @@ bus = &"SFX"
 [node name="footstep timer" type="Timer" parent="audio"]
 wait_time = 0.6
 
-[node name="flashlight" type="Node2D" parent="." node_paths=PackedStringArray("pointlight", "battery_timer")]
+[node name="flashlight" type="Node2D" parent="." node_paths=PackedStringArray("activity_bar", "pointlight", "battery_timer", "flashlight_click_sound", "replace_battery_prompt", "battery_recharge_particle")]
 position = Vector2(0, -14)
 script = ExtResource("7_bbdrw")
+activity_bar = NodePath("../activity bar")
 pointlight = NodePath("PointLight2D")
-battery_timer = NodePath("battery timer")
+battery_timer = NodePath("battery drain timer")
+flashlight_click_sound = NodePath("flashlight click sound")
+replace_battery_prompt = NodePath("../replace battery prompt")
+battery_recharge_particle = NodePath("../battery recharge particle")
 
 [node name="PointLight2D" type="PointLight2D" parent="flashlight"]
 rotation = 1.5708
@@ -732,11 +638,80 @@ rotation = 1.5708
 occluder = SubResource("OccluderPolygon2D_e7pqx")
 occluder_light_mask = 4
 
-[node name="battery timer" type="Timer" parent="flashlight"]
+[node name="battery drain timer" type="Timer" parent="flashlight"]
 wait_time = 0.2
 autostart = true
 
+[node name="flashlight click sound" type="AudioStreamPlayer2D" parent="flashlight"]
+stream = ExtResource("8_l8lgy")
+bus = &"SFX"
+
+[node name="ghost detector" type="Area2D" parent="flashlight"]
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="flashlight/ghost detector"]
+position = Vector2(-9.44166e-06, -216)
+shape = SubResource("CapsuleShape2D_syno0")
+
+[node name="line of signt" type="Node2D" parent="flashlight" node_paths=PackedStringArray("player", "flashlight")]
+rotation = -1.5708
+script = ExtResource("9_0vk0v")
+player = NodePath("../..")
+flashlight = NodePath("..")
+
+[node name="RayCast2D1" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = 0.296706
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D2" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = 0.261799
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D3" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = 0.20944
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D4" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = 0.15708
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D5" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = 0.10472
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D6" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = 0.0523599
+target_position = Vector2(0, 480)
+
+[node name="RayCast Middle 7" type="RayCast2D" parent="flashlight/line of signt"]
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D8" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = -0.0523599
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D9" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = -0.10472
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D10" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = -0.15708
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D11" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = -0.20944
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D12" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = -0.261799
+target_position = Vector2(0, 480)
+
+[node name="RayCast2D13" type="RayCast2D" parent="flashlight/line of signt"]
+rotation = -0.296706
+target_position = Vector2(0, 480)
+
 [node name="replace battery prompt" type="Label" parent="."]
+visible = false
 offset_left = -84.0
 offset_top = -94.0
 offset_right = 88.0
@@ -744,6 +719,7 @@ offset_bottom = -71.0
 text = "[RMB] Replace Battery"
 
 [node name="activity bar" type="ProgressBar" parent="."]
+visible = false
 offset_left = 16.0
 offset_top = -73.0
 offset_right = 97.0
@@ -753,17 +729,25 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ey6io")
 value = 50.0
 show_percentage = false
 
-[node name="battery cartridge" type="Sprite2D" parent="."]
+[node name="battery recharge particle" type="CPUParticles2D" parent="."]
+visibility_layer = 2
 texture_filter = 1
-position = Vector2(0, -28)
-scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 1
+one_shot = true
 texture = ExtResource("8_gkgc5")
-
-[node name="battery animation" type="AnimationPlayer" parent="battery cartridge"]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_jsp3o")
-}
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, 600)
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+damping_min = 30.0
+damping_max = 30.0
+damping_curve = SubResource("Curve_ounm3")
+scale_amount_min = 0.3
+scale_amount_max = 0.3
 
 [connection signal="timeout" from="audio/footstep timer" to="." method="_on_footstep_timer_timeout"]
-[connection signal="timeout" from="flashlight/battery timer" to="flashlight" method="_on_battery_timer_timeout"]
+[connection signal="timeout" from="flashlight/battery drain timer" to="flashlight" method="battery_drain"]

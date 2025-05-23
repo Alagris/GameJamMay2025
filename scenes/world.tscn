@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=12 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
@@ -9,21 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="4_nst5r"]
 [ext_resource type="Script" path="res://scenes/teleport_areas.gd" id="8_ro1d2"]
 [ext_resource type="PackedScene" uid="uid://cg5sc7qo5kriu" path="res://Fuse Box.tscn" id="9_2dr8g"]
-
-[sub_resource type="Gradient" id="Gradient_iqvcx"]
-offsets = PackedFloat32Array(0.694805, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_x8rsa"]
-gradient = SubResource("Gradient_iqvcx")
-width = 5000
-height = 5000
-fill = 1
-fill_from = Vector2(0.509174, 0.5)
-fill_to = Vector2(0.917431, 0.12844)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7ls7u"]
-polygon = PackedVector2Array(-30, -3, 33, -3, 33, -36, -30, -36)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
 radius = 35.0143
@@ -61,47 +46,6 @@ scale = Vector2(5, 5)
 light_on = false
 
 [node name="windows" type="Node" parent="Lights"]
-
-[node name="outside light" type="PointLight2D" parent="Lights/windows"]
-position = Vector2(498, -1730)
-scale = Vector2(1.70585, 1)
-color = Color(0, 0, 0, 1)
-shadow_enabled = true
-shadow_color = Color(0.329158, 0.329158, 0.329158, 0.443137)
-shadow_item_cull_mask = 2
-texture = SubResource("GradientTexture2D_x8rsa")
-offset = Vector2(720.022, -1234.42)
-
-[node name="window 1 beam" type="LightOccluder2D" parent="Lights/windows"]
-position = Vector2(-232, -755)
-occluder = SubResource("OccluderPolygon2D_7ls7u")
-occluder_light_mask = 2
-
-[node name="window 2 beam" type="LightOccluder2D" parent="Lights/windows"]
-position = Vector2(232, -755)
-occluder = SubResource("OccluderPolygon2D_7ls7u")
-occluder_light_mask = 2
-
-[node name="window 3 beam" type="LightOccluder2D" parent="Lights/windows"]
-position = Vector2(504, -755)
-occluder = SubResource("OccluderPolygon2D_7ls7u")
-occluder_light_mask = 2
-
-[node name="window 4 beam" type="LightOccluder2D" parent="Lights/windows"]
-position = Vector2(984, -755)
-occluder = SubResource("OccluderPolygon2D_7ls7u")
-occluder_light_mask = 2
-
-[node name="windoe 5 beam" type="LightOccluder2D" parent="Lights/windows"]
-position = Vector2(1384, -755)
-occluder = SubResource("OccluderPolygon2D_7ls7u")
-occluder_light_mask = 2
-
-[node name="Window" type="PointLight2D" parent="Lights/windows"]
-position = Vector2(1384, -768)
-energy = 0.1
-texture = ExtResource("4_i7141")
-texture_scale = 0.78
 
 [node name="Window2" type="PointLight2D" parent="Lights/windows"]
 position = Vector2(988, -768)

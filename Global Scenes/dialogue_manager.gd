@@ -114,7 +114,7 @@ func loop_audio():
 
 func play_dialogue(dialogue_package:Array):
 	print("play dialogue requested")
-	player_character.can_control = false
+	InputManager.can_control_player = false
 	text_stack = dialogue_package.duplicate(true)
 	print(text_stack)
 	text_stack_size = (text_stack.size() - 1)
@@ -136,7 +136,7 @@ func play_dialogue(dialogue_package:Array):
 
 func close_dialogue():
 	print("closing dialogue requested")
-	player_character.can_control = true
+	InputManager.can_control_player = true
 	dialogue_box_on = false
 	
 	character_talking = CHARACTER_TALKING.NOBODY

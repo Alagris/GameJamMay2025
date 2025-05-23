@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd5mnb88p2xve"]
+
+[ext_resource type="Script" path="res://Global Scenes/input_manager.gd" id="1_cmfvm"]
+
+[node name="Input Manager" type="Node"]
+script = ExtResource("1_cmfvm")

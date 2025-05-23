@@ -13,6 +13,7 @@ config_version=5
 config/name="Game Jam May 2025"
 run/main_scene="res://scenes/world.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [autoload]
@@ -22,6 +23,7 @@ PauseMenu="*res://Global Scenes/pause_menu.tscn"
 DialogueManager="*res://Global Scenes/dialogue_manager.tscn"
 InteractionManager="*res://scenes/interaction_manager.tscn"
 SaveManager="*res://Global Scenes/save_manager.tscn"
+InputManager="*res://Global Scenes/input_manager.tscn"
 
 [display]
 
@@ -63,6 +65,16 @@ escape={
 "speed up text"={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(91, 12),"global_position":Vector2(100, 58),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+"toggle flashlight"={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(112, 17),"global_position":Vector2(121, 63),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+"recharge flashlight"={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(223, 8),"global_position":Vector2(232, 54),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
 

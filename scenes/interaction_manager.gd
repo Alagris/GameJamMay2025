@@ -6,14 +6,13 @@ var powered_objects:Array = []
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var label = $Label
 
-
-
 var active_areas = []
 var nearest_area:Item = null
 var can_interact = true
+
 func register_area(a: Item):
 	active_areas.push_back(a)
-	print(active_areas)
+	#print(active_areas)
 	
 func unregister_area(a: Item):
 	var i = active_areas.find(a)

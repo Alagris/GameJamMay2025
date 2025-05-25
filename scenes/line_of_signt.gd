@@ -12,14 +12,17 @@ func _ready():
 		raycast_node_array[i].add_exception(player)
 
 func _physics_process(delta):
+	
 	update_ray_length()
+	if flashlight.flashlight_on == false:
+		return
 	for i in raycast_node_array.size():
 		if not raycast_node_array[i].is_colliding():
 			continue
 		var collider = raycast_node_array[i].get_collider()
 		if not collider.is_in_group("enemy angel"):
 			continue
-		#signal angel
+		collider.i_see_you()
 
 
 func update_ray_length():
@@ -28,7 +31,7 @@ func update_ray_length():
 		true:
 			new_length = raycast_max_length * flashlight.flashlight_scale_y
 		false:
-			new_length = player.player_light.scale.x * 250
-	new_length = maxf(new_length,250.0)
+			new_length = player.player_light.scale.x * (100.0 * player.ray_length_ratio)
+	new_length = maxf(new_length,60.0)
 	for i in raycast_node_array.size():
 		raycast_node_array[i].target_position.y = new_length

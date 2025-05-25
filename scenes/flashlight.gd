@@ -12,6 +12,8 @@ var flashlight_scale_y:float = 1.0
 
 var flashlight_on:bool = false
 
+var rng = RandomNumberGenerator.new()
+var flickering:bool = false
 
 func _ready():
 	InputManager.flashlight = self
@@ -33,13 +35,15 @@ func update_brightness():
 	
 	battery_ratio = float(battery_charge)/100
 	flashlight_scale_y = (battery_ratio * .6) + .4
-	var scale_brightness:float = (battery_ratio * .8) + .2
+	var scale_brightness:float = (battery_ratio * .9) + .10
 	
 	var tween = create_tween()
 	tween.tween_property(pointlight,"scale",Vector2(1.0,flashlight_scale_y),wait_time)
 	tween.parallel().tween_property(pointlight,"energy",scale_brightness,wait_time)
 
 func recharge_flashlight():
+	if flickering:
+		return
 	print(SaveManager.battery_count)
 	if not SaveManager.battery_count > 0:
 		return
@@ -76,19 +80,55 @@ func flashlight_die(battery_death:bool):
 		replace_battery_prompt.show()
 	flashlight_on = false
 	battery_timer.set_paused(true)
-	#flicker light here
+	flicker()
 	pointlight.hide()
 
+func flicker():
+	flickering = true
+	var prev_state:bool = flashlight_on
+	var flickers:int = rng.randi_range(3,4)
+	for i in flickers:
+		await get_tree().create_timer(rng.randf_range(0.01,0.1),true).timeout
+		turn_on()
+		await get_tree().create_timer(0.05,true).timeout
+		turn_off()
+		await get_tree().create_timer(0.05,true).timeout
+	if prev_state == true:
+		turn_on()
+	flickering = false
+
+func hope_flick():
+	battery_charge = rng.randi_range(15,35)
+	turn_on()
+
+
+
 func flashlight_toggle():
+	if flickering == true:
+		return
 	flashlight_click_sound.play()
 	#print("toggle flashlight requested")
+	if battery_charge == 0.0:
+		var flicker_chance = rng.randi_range(1,4)
+		if flicker_chance == 1:
+			hope_flick()
 	if battery_charge > 0:
-		#print("toggle flashlight success")
-		
-		flashlight_on = !flashlight_on
-		print("flashlight state " + str(flashlight_on))
-		pointlight.set_visible(flashlight_on)
-		battery_timer.set_paused(!flashlight_on)
+		match flashlight_on:
+			true:
+				turn_off()
+			false:
+				turn_on()
+
+func turn_on():
+	flashlight_on = true
+	pointlight.show()
+	battery_timer.set_paused(false)
+
+func turn_off():
+	flashlight_on = false
+	pointlight.hide()
+	battery_timer.set_paused(true)
+
 
 func battery_drain():
 	#print("battery timeout")

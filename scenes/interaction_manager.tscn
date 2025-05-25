@@ -36,8 +36,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6tgns"]
 _data = {
-&"RESET": SubResource("Animation_3q8fd"),
-&"Animate Text": SubResource("Animation_fjnqj")
+&"Animate Text": SubResource("Animation_fjnqj"),
+&"RESET": SubResource("Animation_3q8fd")
 }
 
 [node name="interaction_manager" type="Node2D"]

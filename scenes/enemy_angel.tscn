@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqx1udn3gwamm"]
+
+[ext_resource type="Script" path="res://scripts/enemy_angel.gd" id="1_e067h"]
+[ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="2_1185b"]
+[ext_resource type="AudioStream" uid="uid://c0ys77y2pis63" path="res://assets/SFX/Giant Boulder Slide Loop A.wav" id="3_hyexh"]
+[ext_resource type="AudioStream" uid="uid://frr4ng78hjxi" path="res://assets/SFX/Large Stones Drag B.wav" id="4_smyan"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u0y6o"]
+radius = 73.3333
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ackg"]
+atlas = ExtResource("2_1185b")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s1qsy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ackg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_bn7wx"]
+offsets = PackedFloat32Array(0, 0.311688, 0.818182)
+colors = PackedColorArray(1, 1, 1, 1, 0.76662, 0.76662, 0.76662, 0.551948, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d30ln"]
+gradient = SubResource("Gradient_bn7wx")
+width = 500
+height = 500
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+
+[node name="enemy angel" type="CharacterBody2D" node_paths=PackedStringArray("cooldown_timer", "nav", "moving_sound", "stopping_sound")]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_e067h")
+cooldown_timer = NodePath("cooldown timer")
+nav = NodePath("NavigationAgent2D")
+moving_sound = NodePath("moving sound")
+stopping_sound = NodePath("stopping sound")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u0y6o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_s1qsy")
+
+[node name="cooldown timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="nav update timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="moving sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hyexh")
+volume_db = 15.0
+pitch_scale = 0.8
+max_distance = 1500.0
+attenuation = 8.28209
+bus = &"SFX"
+
+[node name="stopping sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_smyan")
+max_distance = 1500.0
+bus = &"SFX"
+
+[node name="emergency backup light" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, -14)
+color = Color(1, 1, 1, 0.360784)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_d30ln")
+
+[connection signal="timeout" from="cooldown timer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="nav update timer" to="." method="_on_nav_update_timer_timeout"]
+[connection signal="finished" from="moving sound" to="." method="_on_moving_sound_finished"]

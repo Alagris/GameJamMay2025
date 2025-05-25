@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=13 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bq7g7r1hu044f" path="res://icon.svg" id="4_nst5r"]
 [ext_resource type="Script" path="res://scenes/teleport_areas.gd" id="8_ro1d2"]
 [ext_resource type="PackedScene" uid="uid://cg5sc7qo5kriu" path="res://Fuse Box.tscn" id="9_2dr8g"]
+[ext_resource type="PackedScene" uid="uid://bqx1udn3gwamm" path="res://scenes/enemy_angel.tscn" id="10_mrd55"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
 radius = 35.0143
@@ -24,7 +25,7 @@ size = Vector2(96, 135)
 color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 
 [node name="player" parent="." node_paths=PackedStringArray("canvas_modulate") groups=["player"] instance=ExtResource("2_4wyf3")]
-position = Vector2(1400, -93)
+position = Vector2(311, -60)
 canvas_modulate = NodePath("../Map/CanvasModulate")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -101,5 +102,7 @@ position = Vector2(1091, -103)
 [node name="Fuse Box" parent="." instance=ExtResource("9_2dr8g")]
 position = Vector2(1237, -115)
 scale = Vector2(0.5, 0.5)
+
+[node name="enemy angel" parent="." instance=ExtResource("10_mrd55")]
 
 [connection signal="body_entered" from="Teleport Areas/teleport to basement" to="Teleport Areas" method="_on_teleport_to_basement_body_entered"]

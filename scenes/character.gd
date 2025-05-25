@@ -25,6 +25,11 @@ const DIR_CHAR = ["L", "R", "F", "B"]
 const STATE_ANIM_NAME = ["idle", "walk"]
 var walk_state:int = IDLE
 
+
+var max_ray_length:float = 250
+var current_ray_length:float = 250
+var ray_length_ratio:float = 1.0
+
 func _ready():
 	InputManager.new_player_instance()
 	InputManager.player_character = self
@@ -63,6 +68,7 @@ func scale_modulate(new_color:Color):
 func scale_light(new_scale:Vector2):
 	var tween = create_tween()
 	tween.tween_property(player_light,"scale",new_scale,transition_time)
+	tween.parallel().interpolate_value(ray_length_ratio,player_light.scale.x,1.0,transition_time,Tween.TRANS_LINEAR,Tween.EASE_IN_OUT)
 
 func teleport(location:Vector2):
 	print("teleport requested")

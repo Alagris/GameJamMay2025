@@ -1,8 +1,7 @@
-[gd_scene load_steps=87 format=3 uid="uid://cyh7ier5pw2jc"]
+[gd_scene load_steps=89 format=3 uid="uid://cyh7ier5pw2jc"]
 
 [ext_resource type="Texture2D" uid="uid://c6nfmtol6fa18" path="res://assets/characters/Adam_16x16.png" id="1_agfs1"]
 [ext_resource type="Script" path="res://scenes/character.gd" id="1_rkhd4"]
-[ext_resource type="Texture2D" uid="uid://bl1vdxxpjta47" path="res://assets/effects/light.png" id="3_lrhn5"]
 [ext_resource type="AudioStream" uid="uid://clh50s76ltuem" path="res://assets/SFX/Footsteps/step 1.wav" id="4_e8rby"]
 [ext_resource type="AudioStream" uid="uid://dacq6mamkttx8" path="res://assets/SFX/Footsteps/step 2.wav" id="5_4ns7j"]
 [ext_resource type="AudioStream" uid="uid://bep7pbkcj1rcw" path="res://assets/SFX/Footsteps/step 3.wav" id="6_pbx6u"]
@@ -534,6 +533,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_agfs1"]
 radius = 14.0
 
+[sub_resource type="Gradient" id="Gradient_ku7tn"]
+offsets = PackedFloat32Array(0, 0.311688, 0.792208)
+colors = PackedColorArray(1, 1, 1, 1, 0.76662, 0.76662, 0.76662, 0.551948, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mnj32"]
+gradient = SubResource("Gradient_ku7tn")
+width = 500
+height = 500
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3py5w"]
 random_pitch = 1.1
 random_volume_offset_db = 1.0
@@ -581,6 +592,10 @@ max_value = 100.0
 _data = [Vector2(0.0280899, 0), 0.0, 0.0, 0, 0, Vector2(0.668539, 3.29671), 0.0, 0.0, 0, 0, Vector2(1, 31.8681), 120.372, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="Curve" id="Curve_2xsnc"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252809, 1), 0.0, 0.0, 0, 0, Vector2(0.752809, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.021978), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [node name="character" type="CharacterBody2D" node_paths=PackedStringArray("player_light")]
 collision_layer = 3
 script = ExtResource("1_rkhd4")
@@ -600,9 +615,10 @@ position = Vector2(0, -14)
 shape = SubResource("CircleShape2D_agfs1")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -14)
 color = Color(1, 1, 1, 0.360784)
 shadow_enabled = true
-texture = ExtResource("3_lrhn5")
+texture = SubResource("GradientTexture2D_mnj32")
 
 [node name="audio" type="Node" parent="."]
 
@@ -748,6 +764,22 @@ damping_max = 30.0
 damping_curve = SubResource("Curve_ounm3")
 scale_amount_min = 0.3
 scale_amount_max = 0.3
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 200
+lifetime = 10.0
+emission_shape = 3
+emission_rect_extents = Vector2(700, 500)
+direction = Vector2(0, 1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_2xsnc")
+color = Color(0.219501, 0.219501, 0.219501, 1)
+hue_variation_min = -1.0
+hue_variation_max = 1.0
 
 [connection signal="timeout" from="audio/footstep timer" to="." method="_on_footstep_timer_timeout"]
 [connection signal="timeout" from="flashlight/battery drain timer" to="flashlight" method="battery_drain"]

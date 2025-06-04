@@ -23,10 +23,9 @@ func unregister_area(a: Item):
 func _ready():
 	$AnimationPlayer.play("Animate Text")
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if can_interact == false:
 		pass
-		#print("can interact is false")
 	if can_interact && active_areas.size()>0:
 		var player_pos:Vector2 = player.global_position
 		var nearest_dist = active_areas[0].global_position.distance_to(player_pos)

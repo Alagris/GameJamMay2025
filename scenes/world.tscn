@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=15 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cg5sc7qo5kriu" path="res://Fuse Box.tscn" id="9_2dr8g"]
 [ext_resource type="PackedScene" uid="uid://bqx1udn3gwamm" path="res://scenes/enemy_angel.tscn" id="10_mrd55"]
 [ext_resource type="PackedScene" uid="uid://cimwyjgg3oe6d" path="res://scenes/lootable_area.tscn" id="11_q7xut"]
+[ext_resource type="PackedScene" uid="uid://dm0mrt40uw7my" path="res://scenes/light_ghost.tscn" id="12_p5ub4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
 radius = 35.0143
@@ -26,7 +27,7 @@ size = Vector2(96, 135)
 color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 
 [node name="player" parent="." node_paths=PackedStringArray("canvas_modulate") groups=["player"] instance=ExtResource("2_4wyf3")]
-position = Vector2(311, -60)
+position = Vector2(217, 382)
 canvas_modulate = NodePath("../Map/CanvasModulate")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -36,6 +37,7 @@ canvas_modulate = NodePath("../Map/CanvasModulate")
 [node name="Light Object" parent="Lights" instance=ExtResource("4_ftt0s")]
 position = Vector2(440, -36)
 scale = Vector2(5, 5)
+light_on = false
 
 [node name="Light Object2" parent="Lights" instance=ExtResource("4_ftt0s")]
 position = Vector2(560, 42)
@@ -110,5 +112,28 @@ scale = Vector2(0.5, 0.5)
 
 [node name="lootable_area" parent="Node2D" instance=ExtResource("11_q7xut")]
 position = Vector2(468, 86)
+
+[node name="light ghost" parent="." instance=ExtResource("12_p5ub4")]
+position = Vector2(276, -117)
+
+[node name="light ghost2" parent="." instance=ExtResource("12_p5ub4")]
+position = Vector2(986, -120)
+
+[node name="light ghost3" parent="." instance=ExtResource("12_p5ub4")]
+
+[node name="light ghost4" parent="." instance=ExtResource("12_p5ub4")]
+position = Vector2(792, 295)
+
+[node name="light ghost5" parent="." instance=ExtResource("12_p5ub4")]
+position = Vector2(660, -545)
+
+[node name="light ghost6" parent="." instance=ExtResource("12_p5ub4")]
+position = Vector2(-172, -448)
+
+[node name="enemy angel2" parent="." instance=ExtResource("10_mrd55")]
+position = Vector2(1293, 337)
+
+[node name="enemy angel3" parent="." instance=ExtResource("10_mrd55")]
+position = Vector2(800, 146)
 
 [connection signal="body_entered" from="Teleport Areas/teleport to basement" to="Teleport Areas" method="_on_teleport_to_basement_body_entered"]

@@ -1,16 +1,14 @@
 extends MarginContainer
 
+@export var player:CharacterBody2D
 @export var meter_1:TextureProgressBar
 @export var meter_2:TextureProgressBar
 @export var meter_3:TextureProgressBar
 @export var meter_4:TextureProgressBar
 
-var test_int:int = -1
-
 var max_value:float = 100.0
 var current_value:float = 100.0
 var value_ratio:float = 1.0
-
 
 var max_progress_value:float = 84.0
 var progress_value:float = 84.0
@@ -20,6 +18,8 @@ var second_threshold:float = 34.0
 var meter_1_down:bool = false
 var meter_2_down:bool = false
 
+func _ready():
+	change_bar(100)
 
 func tween_bar_to_value(value:float,bar:TextureProgressBar,tween_time:float):
 	var tween = create_tween()
@@ -36,11 +36,9 @@ func change_bar(new_value):
 	value_ratio = current_value / 100
 	var progress_value = clampf((value_ratio * max_progress_value),9.79,max_progress_value)
 	
-	
-	if current_value == 9:
-		test_int = 1
-	if current_value == 100:
-		test_int = -1
+	if current_value == 0:
+		player.death()
+		return
 	
 	if progress_value > first_threshold:
 		if meter_1_down == true:
@@ -65,7 +63,5 @@ func change_bar(new_value):
 			tween_bar_to_value(0.0,meter_2,3.0)
 			tween_alpha(Color(1,1,1,0),meter_2,.5)
 		tween_bar_to_value(progress_value,meter_3,.2)
-
-func _on_timer_timeout():
-	print("what")
-	change_bar(test_int)
+	
+	

@@ -11,7 +11,7 @@ var battery_ratio:float = 1.0
 
 var flashlight_scale_y:float = 1.0
 
-var flashlight_on:bool = false
+var light_on:bool = false
 
 var rng = RandomNumberGenerator.new()
 var flickering:bool = false
@@ -22,6 +22,7 @@ func _ready():
 	InputManager.flashlight = self
 
 func _physics_process(delta):
+	print(light_on)
 	if InputManager.can_control_player == false:
 		return
 	look_at(get_global_mouse_position())
@@ -57,9 +58,9 @@ func recharge_flashlight():
 	InputManager.can_control_player = false
 	replace_battery_prompt.hide()
 	print("recharging flashlight")
-	var flashlight_was_on:bool = flashlight_on
+	var flashlight_was_on:bool = light_on
 	battery_charge = 0
-	flashlight_on = false
+	light_on = false
 	pointlight.hide()
 	flashlight_click_sound.play()
 	activity_bar.value = 0.0
@@ -73,7 +74,7 @@ func recharge_flashlight():
 	pointlight.scale = Vector2(1.0,1.0)
 	pointlight.energy = 1.0
 	if flashlight_was_on:
-		flashlight_on = true
+		light_on = true
 		flashlight_click_sound.play()
 		pointlight.show()
 	is_recharging = false
@@ -84,14 +85,14 @@ func flashlight_die(battery_death:bool):
 	if battery_death:
 		battery_charge = 0
 		replace_battery_prompt.show()
-	flashlight_on = false
+	light_on = false
 	battery_timer.set_paused(true)
 	flicker()
 	pointlight.hide()
 
 func flicker():
 	flickering = true
-	var prev_state:bool = flashlight_on
+	var prev_state:bool = light_on
 	var flickers:int = rng.randi_range(3,4)
 	for i in flickers:
 		await get_tree().create_timer(rng.randf_range(0.01,0.1),true).timeout
@@ -117,25 +118,25 @@ func flashlight_toggle():
 		if flicker_chance == 1:
 			hope_flick()
 	if battery_charge > 0:
-		match flashlight_on:
+		match light_on:
 			true:
 				turn_off()
 			false:
 				turn_on()
 
 func turn_on():
-	flashlight_on = true
+	light_on = true
 	pointlight.show()
 	battery_timer.set_paused(false)
 
 func turn_off():
-	flashlight_on = false
+	light_on = false
 	pointlight.hide()
 	battery_timer.set_paused(true)
 
 func battery_drain():
 	#print("battery timeout")
-	if flashlight_on == false:
+	if light_on == false:
 		return
 	if battery_charge == 1:
 		flashlight_die(true)

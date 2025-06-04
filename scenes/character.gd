@@ -8,7 +8,13 @@ const SPEED:float = 120
 var canvas_modulate_original_color:Color
 
 @export var player_light:PointLight2D
-@onready var animated_sprite:AnimatedSprite2D = $animated_spite
+@export var animated_sprite:AnimatedSprite2D
+@export var sanity_meter:MarginContainer
+
+@export var hurt_sound:AudioStreamPlayer2D
+@export var heal_sound:AudioStreamPlayer2D
+
+
 const IDLE = 0
 const WALK = 1
 
@@ -124,3 +130,16 @@ func replace_battery():
 	InputManager.can_control_player = false
 	await get_tree().create_timer(1.0,true).timeout
 	InputManager.can_control_player = true
+
+func hurt(amount):
+	hurt_sound.play()
+	sanity_meter.change_bar((amount * -1))
+
+
+func heal(amount):
+	heal_sound.play()
+	sanity_meter.change_bar(amount)
+
+func death():
+	print("death")
+	pass

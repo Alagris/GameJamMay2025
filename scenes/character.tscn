@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://cyh7ier5pw2jc"]
+[gd_scene load_steps=96 format=3 uid="uid://cyh7ier5pw2jc"]
 
 [ext_resource type="Texture2D" uid="uid://c6nfmtol6fa18" path="res://assets/characters/Adam_16x16.png" id="1_agfs1"]
 [ext_resource type="Script" path="res://scenes/character.gd" id="1_rkhd4"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scenes/line_of_signt.gd" id="9_0vk0v"]
 [ext_resource type="Script" path="res://scenes/sanity_meter.gd" id="10_nrwj8"]
 [ext_resource type="Texture2D" uid="uid://be8e045haf1jl" path="res://assets/Cremcakeart/420_Sem_Titulo_20250523124300.png" id="10_wbjqk"]
+[ext_resource type="Script" path="res://scenes/ghost_area_detection.gd" id="12_f1qv0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rkhd4"]
 atlas = ExtResource("1_agfs1")
@@ -569,10 +570,6 @@ fill_to = Vector2(0.7, 0.3)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e7pqx"]
 polygon = PackedVector2Array(0, 0, 30, -90, 25, -90, 0, -1, -25, -90, -30, -90)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_syno0"]
-radius = 63.0
-height = 454.0
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvxf0"]
 bg_color = Color(0.647103, 0.532347, 0.375577, 1)
 border_width_left = 1
@@ -614,12 +611,18 @@ region = Rect2(0, 201, 530, 127)
 atlas = ExtResource("10_wbjqk")
 region = Rect2(0, 65, 530, 111)
 
-[node name="character" type="CharacterBody2D" node_paths=PackedStringArray("flashlight", "activity_bar", "player_light")]
-collision_layer = 3
+[sub_resource type="CircleShape2D" id="CircleShape2D_61glu"]
+
+[node name="character" type="CharacterBody2D" node_paths=PackedStringArray("flashlight", "activity_bar", "player_light", "animated_sprite", "sanity_meter", "hurt_sound", "heal_sound")]
+collision_layer = 5
 script = ExtResource("1_rkhd4")
 flashlight = NodePath("flashlight")
 activity_bar = NodePath("activity bar")
 player_light = NodePath("PointLight2D")
+animated_sprite = NodePath("animated_spite")
+sanity_meter = NodePath("CanvasLayer/HUD/Sanity Meter")
+hurt_sound = NodePath("audio/Hurt Sound")
+heal_sound = NodePath("audio/Heal Sound")
 
 [node name="animated_spite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -650,6 +653,12 @@ bus = &"SFX"
 
 [node name="footstep timer" type="Timer" parent="audio"]
 wait_time = 0.6
+
+[node name="Hurt Sound" type="AudioStreamPlayer2D" parent="audio"]
+bus = &"SFX"
+
+[node name="Heal Sound" type="AudioStreamPlayer2D" parent="audio"]
+bus = &"SFX"
 
 [node name="flashlight" type="Node2D" parent="." node_paths=PackedStringArray("player", "activity_bar", "pointlight", "battery_timer", "flashlight_click_sound", "replace_battery_prompt", "battery_recharge_particle")]
 position = Vector2(0, -14)
@@ -683,13 +692,6 @@ autostart = true
 stream = ExtResource("8_l8lgy")
 bus = &"SFX"
 
-[node name="ghost detector" type="Area2D" parent="flashlight"]
-rotation = 1.5708
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="flashlight/ghost detector"]
-position = Vector2(-9.44166e-06, -216)
-shape = SubResource("CapsuleShape2D_syno0")
-
 [node name="line of signt" type="Node2D" parent="flashlight" node_paths=PackedStringArray("player", "flashlight")]
 rotation = -1.5708
 script = ExtResource("9_0vk0v")
@@ -699,53 +701,66 @@ flashlight = NodePath("..")
 [node name="RayCast2D1" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = 0.296706
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D2" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = 0.261799
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D3" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = 0.20944
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D4" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = 0.15708
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D5" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = 0.10472
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D6" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = 0.0523599
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast Middle 7" type="RayCast2D" parent="flashlight/line of signt"]
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D8" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = -0.0523599
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D9" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = -0.10472
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D10" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = -0.15708
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D11" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = -0.20944
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D12" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = -0.261799
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="RayCast2D13" type="RayCast2D" parent="flashlight/line of signt"]
 rotation = -0.296706
 target_position = Vector2(0, 480)
+collision_mask = 2
 
 [node name="replace battery prompt" type="Label" parent="."]
 visible = false
@@ -813,13 +828,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Sanity Meter" type="MarginContainer" parent="CanvasLayer/HUD" node_paths=PackedStringArray("meter_1", "meter_2", "meter_3", "meter_4")]
+[node name="Sanity Meter" type="MarginContainer" parent="CanvasLayer/HUD" node_paths=PackedStringArray("player", "meter_1", "meter_2", "meter_3", "meter_4")]
 layout_mode = 0
 offset_left = -26.0
 offset_right = 504.0
 offset_bottom = 212.0
 mouse_filter = 2
 script = ExtResource("10_nrwj8")
+player = NodePath("../../..")
 meter_1 = NodePath("1")
 meter_2 = NodePath("2")
 meter_3 = NodePath("3")
@@ -851,10 +867,15 @@ mouse_filter = 2
 step = 0.01
 texture_progress = SubResource("AtlasTexture_s0u13")
 
-[node name="Timer" type="Timer" parent="CanvasLayer/HUD/Sanity Meter"]
-wait_time = 0.1
-autostart = true
+[node name="ghost_area_detection" type="Area2D" parent="." node_paths=PackedStringArray("ghost_light_target")]
+position = Vector2(0, -14)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("12_f1qv0")
+ghost_light_target = NodePath("../flashlight")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ghost_area_detection"]
+shape = SubResource("CircleShape2D_61glu")
 
 [connection signal="timeout" from="audio/footstep timer" to="." method="_on_footstep_timer_timeout"]
 [connection signal="timeout" from="flashlight/battery drain timer" to="flashlight" method="battery_drain"]
-[connection signal="timeout" from="CanvasLayer/HUD/Sanity Meter/Timer" to="CanvasLayer/HUD/Sanity Meter" method="_on_timer_timeout"]

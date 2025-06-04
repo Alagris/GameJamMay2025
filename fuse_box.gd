@@ -15,7 +15,7 @@ func _ready():
 	fuse_array.append(fuse_3_texture)
 	for i in fuse_array.size():
 		fuse_array[i].self_modulate = Color(0.1,0.1,0.1,1)
-	deactivate_power()
+	#deactivate_power()
 
 
 func interact():

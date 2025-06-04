@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dq7rjoj2acmjh"]
+[gd_scene load_steps=10 format=3 uid="uid://dq7rjoj2acmjh"]
 
 [ext_resource type="Script" path="res://scripts/light_object.gd" id="1_lc526"]
 [ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="2_3kji8"]
 [ext_resource type="AudioStream" uid="uid://2ybwbcq3qo7v" path="res://assets/SFX/Fuse In.wav" id="3_lcgls"]
+[ext_resource type="Script" path="res://scenes/ghost_area_detection.gd" id="4_m0xor"]
 
 [sub_resource type="Gradient" id="Gradient_lsx4t"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -18,14 +19,21 @@ fill_to = Vector2(0.8, 0.2)
 [sub_resource type="CircleShape2D" id="CircleShape2D_erat4"]
 radius = 17.0
 
-[node name="Light Object" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_br6ai"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2stfw"]
+
+[node name="Light Object" type="Node2D" node_paths=PackedStringArray("monster_stopper_area")]
 script = ExtResource("1_lc526")
+monster_stopper_area = NodePath("monster stopper")
 
 [node name="Light Object" type="PointLight2D" parent="."]
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_nse26")
 
 [node name="Area2D" parent="." instance=ExtResource("2_3kji8")]
+collision_mask = 6
 action_name = "Turn On"
 requires_power = true
 
@@ -35,3 +43,19 @@ shape = SubResource("CircleShape2D_erat4")
 [node name="flick sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_lcgls")
 bus = &"SFX"
+
+[node name="monster stopper" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="monster stopper"]
+shape = SubResource("CircleShape2D_br6ai")
+
+[node name="ghost_area_detection" type="Area2D" parent="." node_paths=PackedStringArray("ghost_light_target")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_m0xor")
+ghost_light_target = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ghost_area_detection"]
+shape = SubResource("CircleShape2D_2stfw")

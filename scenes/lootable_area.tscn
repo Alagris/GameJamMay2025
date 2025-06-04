@@ -1,3 +1,15 @@
-[gd_scene format=3 uid="uid://cimwyjgg3oe6d"]
+[gd_scene load_steps=4 format=3 uid="uid://cimwyjgg3oe6d"]
+
+[ext_resource type="Script" path="res://scenes/lootable_area.gd" id="1_3d8x3"]
+[ext_resource type="PackedScene" uid="uid://c5jitd1882acy" path="res://scenes/item.tscn" id="2_mrrg0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iwt60"]
 
 [node name="lootable_area" type="Node2D"]
+script = ExtResource("1_3d8x3")
+
+[node name="Area2D" parent="." instance=ExtResource("2_mrrg0")]
+action_name = "Search for Loot"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_iwt60")

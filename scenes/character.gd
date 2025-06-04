@@ -2,11 +2,10 @@ extends CharacterBody2D
 
 const SPEED:float = 120
 
+@export var flashlight:Node2D
+@export var activity_bar:ProgressBar
 @export var canvas_modulate:CanvasModulate
 var canvas_modulate_original_color:Color
-
-var transition_time:float = 1.0
-
 
 @export var player_light:PointLight2D
 @onready var animated_sprite:AnimatedSprite2D = $animated_spite
@@ -25,10 +24,13 @@ const DIR_CHAR = ["L", "R", "F", "B"]
 const STATE_ANIM_NAME = ["idle", "walk"]
 var walk_state:int = IDLE
 
-
 var max_ray_length:float = 250
 var current_ray_length:float = 250
 var ray_length_ratio:float = 1.0
+
+var is_looting:bool = false
+var looting_tween:Tween
+var transition_time:float = 1.0
 
 func _ready():
 	InputManager.new_player_instance()
@@ -48,9 +50,15 @@ func _physics_process(delta: float) -> void:
 		dir_int = ANIMATE_PATH.ANIMATE_LEFT
 	elif velocity.x>0:
 		dir_int = ANIMATE_PATH.ANIMATE_RIGHT
-		
-	match (absf(velocity.y) + absf(velocity.x)) > 0:
+	
+	var absolute_velocity:float = absf(velocity.y) + absf(velocity.x)
+	
+	match absolute_velocity > 0:
 		true:
+			if is_looting == true:
+				is_looting = false
+				activity_bar.hide()
+				looting_tween.kill()
 			walk_state = WALK
 			if $"audio/footstep timer".is_stopped():
 				$"audio/footstep timer".start()
@@ -96,9 +104,23 @@ func _on_footstep_timer_timeout():
 		WALK:
 			$"audio/footstep sounds".play()
 
+func loot(lootable_object:Node2D):
+	if flashlight.is_recharging:
+		return
+	var loot_time:float = 2.0
+	var tween = create_tween()
+	looting_tween = tween
+	is_looting = true
+	
+	tween.tween_property(activity_bar,"value",100,loot_time)
+	activity_bar.show()
+	await get_tree().create_timer(loot_time,true).timeout
+	if is_looting:
+		activity_bar.hide()
+		is_looting = false
+		lootable_object.looted()
 
 func replace_battery():
 	InputManager.can_control_player = false
-	
 	await get_tree().create_timer(1.0,true).timeout
 	InputManager.can_control_player = true

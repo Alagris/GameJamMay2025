@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4tnan2dh4t1p"]
+[gd_scene load_steps=14 format=3 uid="uid://b4tnan2dh4t1p"]
 
 [ext_resource type="PackedScene" uid="uid://rw6uxnkjo6a2" path="res://scenes/map.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cyh7ier5pw2jc" path="res://scenes/character.tscn" id="2_4wyf3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scenes/teleport_areas.gd" id="8_ro1d2"]
 [ext_resource type="PackedScene" uid="uid://cg5sc7qo5kriu" path="res://Fuse Box.tscn" id="9_2dr8g"]
 [ext_resource type="PackedScene" uid="uid://bqx1udn3gwamm" path="res://scenes/enemy_angel.tscn" id="10_mrd55"]
+[ext_resource type="PackedScene" uid="uid://cimwyjgg3oe6d" path="res://scenes/lootable_area.tscn" id="11_q7xut"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71j4m"]
 radius = 35.0143
@@ -104,5 +105,10 @@ position = Vector2(1237, -115)
 scale = Vector2(0.5, 0.5)
 
 [node name="enemy angel" parent="." instance=ExtResource("10_mrd55")]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="lootable_area" parent="Node2D" instance=ExtResource("11_q7xut")]
+position = Vector2(468, 86)
 
 [connection signal="body_entered" from="Teleport Areas/teleport to basement" to="Teleport Areas" method="_on_teleport_to_basement_body_entered"]

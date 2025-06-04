@@ -1,4 +1,5 @@
 extends Node2D
+@export var player:CharacterBody2D
 @export var activity_bar:ProgressBar
 @export var pointlight:PointLight2D
 @export var battery_timer:Timer
@@ -14,6 +15,8 @@ var flashlight_on:bool = false
 
 var rng = RandomNumberGenerator.new()
 var flickering:bool = false
+var is_recharging:bool = false
+
 
 func _ready():
 	InputManager.flashlight = self
@@ -44,9 +47,12 @@ func update_brightness():
 func recharge_flashlight():
 	if flickering:
 		return
+	if player.is_looting:
+		return
 	print(SaveManager.battery_count)
 	if not SaveManager.battery_count > 0:
 		return
+	is_recharging = true
 	SaveManager.battery_count -= 1
 	InputManager.can_control_player = false
 	replace_battery_prompt.hide()
@@ -70,8 +76,8 @@ func recharge_flashlight():
 		flashlight_on = true
 		flashlight_click_sound.play()
 		pointlight.show()
+	is_recharging = false
 	InputManager.can_control_player = true
-
 
 func flashlight_die(battery_death:bool):
 	print("flashlight has died")
@@ -101,8 +107,6 @@ func hope_flick():
 	battery_charge = rng.randi_range(15,35)
 	turn_on()
 
-
-
 func flashlight_toggle():
 	if flickering == true:
 		return
@@ -128,7 +132,6 @@ func turn_off():
 	flashlight_on = false
 	pointlight.hide()
 	battery_timer.set_paused(true)
-
 
 func battery_drain():
 	#print("battery timeout")

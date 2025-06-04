@@ -5,11 +5,14 @@ var flashlight:Node2D
 
 var can_control_player:bool = true
 
+
 func _ready():
 	pass
 
 func new_player_instance():
 	can_control_player = true
+
+
 
 func _physics_process(delta):
 	if is_instance_valid(player_character) == false:

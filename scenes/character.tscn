@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://cyh7ier5pw2jc"]
+[gd_scene load_steps=95 format=3 uid="uid://cyh7ier5pw2jc"]
 
 [ext_resource type="Texture2D" uid="uid://c6nfmtol6fa18" path="res://assets/characters/Adam_16x16.png" id="1_agfs1"]
 [ext_resource type="Script" path="res://scenes/character.gd" id="1_rkhd4"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cj70xfovi07q5" path="res://assets/Cab's Pixel Art/Battery.png" id="8_gkgc5"]
 [ext_resource type="AudioStream" uid="uid://2ybwbcq3qo7v" path="res://assets/SFX/Fuse In.wav" id="8_l8lgy"]
 [ext_resource type="Script" path="res://scenes/line_of_signt.gd" id="9_0vk0v"]
+[ext_resource type="Script" path="res://scenes/sanity_meter.gd" id="10_nrwj8"]
+[ext_resource type="Texture2D" uid="uid://be8e045haf1jl" path="res://assets/Cremcakeart/420_Sem_Titulo_20250523124300.png" id="10_wbjqk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rkhd4"]
 atlas = ExtResource("1_agfs1")
@@ -596,9 +598,27 @@ point_count = 3
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252809, 1), 0.0, 0.0, 0, 0, Vector2(0.752809, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.021978), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[node name="character" type="CharacterBody2D" node_paths=PackedStringArray("player_light")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oblyk"]
+atlas = ExtResource("10_wbjqk")
+region = Rect2(0, 496, 530, 212)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t03py"]
+atlas = ExtResource("10_wbjqk")
+region = Rect2(0, 347, 530, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwrpg"]
+atlas = ExtResource("10_wbjqk")
+region = Rect2(0, 201, 530, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0u13"]
+atlas = ExtResource("10_wbjqk")
+region = Rect2(0, 65, 530, 111)
+
+[node name="character" type="CharacterBody2D" node_paths=PackedStringArray("flashlight", "activity_bar", "player_light")]
 collision_layer = 3
 script = ExtResource("1_rkhd4")
+flashlight = NodePath("flashlight")
+activity_bar = NodePath("activity bar")
 player_light = NodePath("PointLight2D")
 
 [node name="animated_spite" type="AnimatedSprite2D" parent="."]
@@ -631,9 +651,10 @@ bus = &"SFX"
 [node name="footstep timer" type="Timer" parent="audio"]
 wait_time = 0.6
 
-[node name="flashlight" type="Node2D" parent="." node_paths=PackedStringArray("activity_bar", "pointlight", "battery_timer", "flashlight_click_sound", "replace_battery_prompt", "battery_recharge_particle")]
+[node name="flashlight" type="Node2D" parent="." node_paths=PackedStringArray("player", "activity_bar", "pointlight", "battery_timer", "flashlight_click_sound", "replace_battery_prompt", "battery_recharge_particle")]
 position = Vector2(0, -14)
 script = ExtResource("7_bbdrw")
+player = NodePath("..")
 activity_bar = NodePath("../activity bar")
 pointlight = NodePath("PointLight2D")
 battery_timer = NodePath("battery drain timer")
@@ -781,5 +802,59 @@ color = Color(0.219501, 0.219501, 0.219501, 1)
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Sanity Meter" type="MarginContainer" parent="CanvasLayer/HUD" node_paths=PackedStringArray("meter_1", "meter_2", "meter_3", "meter_4")]
+layout_mode = 0
+offset_left = -26.0
+offset_right = 504.0
+offset_bottom = 212.0
+mouse_filter = 2
+script = ExtResource("10_nrwj8")
+meter_1 = NodePath("1")
+meter_2 = NodePath("2")
+meter_3 = NodePath("3")
+meter_4 = NodePath("4")
+
+[node name="4" type="TextureProgressBar" parent="CanvasLayer/HUD/Sanity Meter"]
+layout_mode = 2
+mouse_filter = 2
+step = 0.01
+value = 100.0
+texture_progress = SubResource("AtlasTexture_oblyk")
+
+[node name="3" type="TextureProgressBar" parent="CanvasLayer/HUD/Sanity Meter"]
+layout_mode = 2
+mouse_filter = 2
+step = 0.01
+value = 9.79
+texture_progress = SubResource("AtlasTexture_t03py")
+
+[node name="2" type="TextureProgressBar" parent="CanvasLayer/HUD/Sanity Meter"]
+layout_mode = 2
+mouse_filter = 2
+step = 0.01
+texture_progress = SubResource("AtlasTexture_pwrpg")
+
+[node name="1" type="TextureProgressBar" parent="CanvasLayer/HUD/Sanity Meter"]
+layout_mode = 2
+mouse_filter = 2
+step = 0.01
+texture_progress = SubResource("AtlasTexture_s0u13")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/HUD/Sanity Meter"]
+wait_time = 0.1
+autostart = true
+
 [connection signal="timeout" from="audio/footstep timer" to="." method="_on_footstep_timer_timeout"]
 [connection signal="timeout" from="flashlight/battery drain timer" to="flashlight" method="battery_drain"]
+[connection signal="timeout" from="CanvasLayer/HUD/Sanity Meter/Timer" to="CanvasLayer/HUD/Sanity Meter" method="_on_timer_timeout"]
